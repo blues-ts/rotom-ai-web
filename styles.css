@@ -375,6 +375,9 @@ h1.hero-title {
   color: #0f1419;
   border-radius: 39px;
   overflow: hidden;
+  clip-path: inset(0 round 39px);
+  isolation: isolate;
+  transform: translateZ(0);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -412,6 +415,19 @@ h1.hero-title {
   position: relative;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 39px;
+  clip-path: inset(0 round 39px);
+  isolation: isolate;
+}
+.mock-detail .home-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  margin: 0;
+  z-index: 5;
 }
 .mock-detail .bg-blur {
   position: absolute;
