@@ -17,20 +17,6 @@
   }
 })();
 
-// Mobile menu
-(function () {
-  const toggle = document.querySelector('.nav-toggle');
-  const menu = document.querySelector('.mobile-menu');
-  if (!toggle || !menu) return;
-  toggle.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
-  });
-  menu.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => menu.classList.remove('open'))
-  );
-})();
-
 // Reveal on scroll
 (function () {
   const els = document.querySelectorAll('.reveal');
