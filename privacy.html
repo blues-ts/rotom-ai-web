@@ -39,10 +39,11 @@
 <main class="legal">
   <div class="container">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: May 3, 2026</p>
+    <p class="updated">Last updated: June 26, 2026</p>
 
     <h2>Overview</h2>
     <p>River AI TCG is a Pokémon TCG card pricing and collection app. This Privacy Policy explains what information we collect when you use the River AI TCG mobile app, how we use it, and the choices you have. By using River AI TCG you agree to this policy.</p>
+    <p>This policy covers data and privacy. The prices, market-analysis "signals," and AI responses in the app are informational only and are <strong>not</strong> financial or investment advice — see Section&nbsp;7 of our <a href="terms.html">Terms of Service</a> for that.</p>
 
     <h2>Information we collect</h2>
 
@@ -65,6 +66,9 @@
 
     <h3>Card scanning images</h3>
     <p>When you use the camera scan feature, the image is captured locally, encoded, and sent to our backend. The backend forwards a resized version to a third-party AI provider for card identification. Neither the app nor our backend retains the image after the analysis completes.</p>
+
+    <h3>Card images displayed in the app</h3>
+    <p>The card artwork and product photos you see in the app are loaded directly from third-party image hosts (the image servers of our market-data provider and the marketplaces it aggregates), rather than from our own servers. When your device loads one of these images, the hosting service receives your device's IP address and standard request information, as it would for any image on the internet. We don't control those hosts' logging; their own privacy policies apply.</p>
 
     <h3>Chat content and collection context</h3>
     <p>When you chat with the in-app AI assistant ("River"), your messages and the conversation history are sent to our backend. If you choose to share a snapshot of your collection, that snapshot is sent with the request. The backend forwards them to a third-party AI provider to generate the response, which is streamed back to you. We do <strong>not</strong> store chat messages, conversation history, or collection snapshots on our backend after responding.</p>
@@ -96,7 +100,7 @@
       <li>A database provider for user-profile storage</li>
       <li>Mobile app build and delivery infrastructure</li>
     </ul>
-    <p><strong>About AI training.</strong> Our AI provider may use API inputs to improve its services unless an opt-out is explicitly configured. We do not currently configure such an opt-out, which means content you send to River chat or scan with the camera may contribute to the provider's model improvement under their API terms. We're tracking this and will update the policy if our configuration changes.</p>
+    <p><strong>About AI training.</strong> We use our AI provider's paid API. Under that API's terms, the content we send it — your chat messages, any collection snapshot you attach, and card-scan images — is processed only to generate a response for you and is <strong>not</strong> used to train or improve the provider's general models. The provider may retain inputs transiently for abuse and safety monitoring as described in its API terms. We'll update this policy if our configuration changes.</p>
 
     <h2>How we use your information</h2>
     <ul>
