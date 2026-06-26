@@ -103,21 +103,10 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: -0.01em;
 }
 .brand-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--splash), var(--primary));
-  position: relative;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset, 0 4px 14px -2px color-mix(in oklab, var(--primary) 55%, transparent);
-}
-.brand-mark::after {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.22);
-  -webkit-mask: radial-gradient(circle at 30% 30%, black 30%, transparent 70%);
-          mask: radial-gradient(circle at 30% 30%, black 30%, transparent 70%);
+  width: auto;
+  height: 26px;
+  display: block;
+  filter: drop-shadow(0 4px 12px color-mix(in oklab, var(--primary) 40%, transparent));
 }
 .nav-links {
   display: flex;
@@ -445,13 +434,13 @@ h1.hero-title {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 0 14px 0;
+  padding: 0;
 }
 .mock-detail .scroll-track {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-bottom: 14px;
+  gap: 0;
+  padding-bottom: 0;
   animation: detailScroll 22s ease-in-out infinite;
 }
 @keyframes detailScroll {
@@ -491,10 +480,10 @@ h1.hero-title {
 /* hero card image */
 .hero-card {
   position: relative;
-  width: 72%;
-  margin: 0 auto;
+  width: 78%;
+  margin: 6px auto 16px;
   aspect-ratio: 1 / 1.4;
-  border-radius: 18px;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 18px 40px -12px rgba(0,0,0,0.35);
   background: #0f1419;
@@ -583,106 +572,92 @@ h1.hero-title {
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
-/* shared inner cards */
-.app-card {
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(15,20,25,0.06);
-  border-radius: 12px;
-  padding: 14px;
+/* counter sheet — one surface that rises beneath the floating card and holds
+   every detail as divided rows (matches the app's card-detail screen) */
+.sheet {
+  position: relative;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(15,20,25,0.08);
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  box-shadow: 0 -8px 20px -6px rgba(0,0,0,0.14);
+  padding: 8px 0 18px;
 }
+.sheet .grabber {
+  width: 34px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(15,20,25,0.22);
+  margin: 0 auto 4px;
+}
+.sheet-section { padding: 15px 18px; }
+.sheet-section.value { padding-top: 14px; padding-bottom: 16px; }
+.sheet-divider { height: 1px; background: rgba(15,20,25,0.08); margin: 0 18px; }
 
-/* estimate block */
-.estimate {
-  text-align: center;
-  padding: 12px 14px 14px;
-}
-.estimate .label {
+/* market value block */
+.mv-label {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  opacity: 0.65;
-  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.75;
+  color: #0f1419;
 }
-.estimate .price {
-  font-size: 32px;
+.mv-price {
+  font-size: 34px;
   font-weight: 800;
-  letter-spacing: -0.04em;
-  margin: 2px 0 6px;
+  letter-spacing: -0.035em;
+  margin: 4px 0 10px;
   font-variant-numeric: tabular-nums;
   color: #0f1419;
 }
-.estimate .chips { display: flex; gap: 6px; justify-content: center; }
-.chip {
+.sel-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.sel-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 5px;
+  padding: 5px 10px;
   border-radius: 999px;
-  background: rgba(30,157,241,0.16);
-  border: 1px solid rgba(30,157,241,0.32);
-  color: #1e9df1;
+  background: rgba(30,157,241,0.20);
+  border: 1px solid rgba(30,157,241,0.33);
+  color: #0f1419;
   font-size: 11px;
   font-weight: 600;
 }
-.chip .pdot { width: 6px; height: 6px; border-radius: 50%; background: #1e9df1; }
+.sel-chip .sdot { width: 7px; height: 7px; border-radius: 50%; background: #1e9df1; }
 
-/* card meta strip */
-.meta-strip { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: flex-start; }
-.meta-strip .name { font-size: 16px; font-weight: 700; color: #0f1419; letter-spacing: -0.01em; }
-.meta-strip .name .num { opacity: 0.6; font-weight: 500; margin-left: 4px; }
-.meta-strip .set { font-size: 12px; color: #0f1419; opacity: 0.7; margin-top: 2px; }
-.meta-strip .pills { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
-.meta-strip .mpill {
+/* identity row */
+.identity { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.identity .id-name { font-size: 15px; font-weight: 700; color: #0f1419; letter-spacing: -0.01em; }
+.identity .id-name .id-num { opacity: 0.65; font-weight: 500; }
+.identity .id-set { font-size: 12px; color: #0f1419; opacity: 0.7; margin-top: 2px; }
+.identity .id-pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.identity .id-pill {
   font-size: 10px;
   font-weight: 600;
-  background: rgba(30,157,241,0.16);
-  border: 1px solid rgba(30,157,241,0.32);
-  color: #1e9df1;
-  padding: 3px 7px;
+  background: rgba(30,157,241,0.20);
+  border: 1px solid rgba(30,157,241,0.33);
+  color: #0f1419;
+  padding: 3px 8px;
   border-radius: 6px;
 }
 
-/* pricing options */
+/* pricing options — config rows that open the configure sheet */
 .section-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 0 0 10px; letter-spacing: -0.01em; }
-.mini-label { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(15,20,25,0.55); margin: 10px 0 6px; }
-.seg-control {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #e5e5e6;
-  padding: 3px;
-  border-radius: 10px;
-  gap: 0;
-}
-.seg-control .seg {
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 0;
-  border-radius: 8px;
-  color: rgba(15,20,25,0.7);
-}
-.seg-control .seg.active {
-  background: #1e9df1;
-  color: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-}
-.tog-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.tog-pill {
-  min-height: 34px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #e5e5e6;
-  color: rgba(15,20,25,0.7);
-  display: inline-flex;
+.mini-label { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(15,20,25,0.55); margin: 14px 0 8px; }
+.config-row {
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(15,20,25,0.10);
 }
-.tog-pill.active { background: #1e9df1; color: #fff; }
-.cond-pills { display: flex; flex-wrap: wrap; gap: 5px; }
-.cond-pills .tog-pill { font-size: 11px; min-height: 28px; padding: 5px 9px; }
+.config-row.last { border-bottom: 0; }
+.config-row .cfg-label { font-size: 13px; font-weight: 600; color: #0f1419; }
+.config-row .cfg-right { display: inline-flex; align-items: center; gap: 6px; }
+.config-row .cfg-value { font-size: 13px; font-weight: 500; color: #0f1419; opacity: 0.7; }
+.config-row .cfg-chev { color: rgba(15,20,25,0.45); display: inline-flex; }
 .price-input {
   height: 38px;
   border-radius: 10px;
@@ -1133,12 +1108,15 @@ section { padding: 88px 0; }
 .stats-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 @media (max-width: 860px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 24px; }
+  .stats-grid { grid-template-columns: 1fr; gap: 28px; }
   .stats-band { padding: 44px 24px; border-radius: 20px; }
+}
+.stat {
+  text-align: center;
 }
 .stat .num {
   font-size: clamp(32px, 4vw, 52px);
@@ -1291,15 +1269,23 @@ section { padding: 88px 0; }
   border-color: rgba(255, 255, 255, 0.08);
   color: #e7e9ea;
 }
-[data-theme="dark"] .app-card {
-  background: rgba(23, 24, 28, 0.85);
-  border-color: rgba(255, 255, 255, 0.06);
+[data-theme="dark"] .sheet {
+  background: rgba(23, 24, 28, 0.78);
+  border-top-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -8px 20px -6px rgba(0, 0, 0, 0.45);
 }
-[data-theme="dark"] .estimate .price,
-[data-theme="dark"] .meta-strip .name,
-[data-theme="dark"] .meta-strip .set,
+[data-theme="dark"] .sheet .grabber { background: rgba(231, 233, 234, 0.28); }
+[data-theme="dark"] .sheet-divider { background: rgba(255, 255, 255, 0.08); }
+[data-theme="dark"] .mv-label,
+[data-theme="dark"] .mv-price,
+[data-theme="dark"] .identity .id-name,
+[data-theme="dark"] .identity .id-set,
+[data-theme="dark"] .config-row .cfg-label,
+[data-theme="dark"] .config-row .cfg-value,
 [data-theme="dark"] .section-title,
 [data-theme="dark"] .hover-head .pv { color: #e7e9ea; }
+[data-theme="dark"] .config-row { border-bottom-color: rgba(255, 255, 255, 0.10); }
+[data-theme="dark"] .config-row .cfg-chev { color: rgba(231, 233, 234, 0.5); }
 [data-theme="dark"] .mini-label,
 [data-theme="dark"] .price-input .cur { color: rgba(231, 233, 234, 0.6); }
 [data-theme="dark"] .price-input {
@@ -1307,34 +1293,23 @@ section { padding: 88px 0; }
   border-color: rgba(255, 255, 255, 0.08);
 }
 [data-theme="dark"] .price-input .ph { color: rgba(231, 233, 234, 0.45); }
-[data-theme="dark"] .seg-control,
-[data-theme="dark"] .period,
-[data-theme="dark"] .tog-pill {
+[data-theme="dark"] .period {
   background: #1a1b1f;
 }
-[data-theme="dark"] .seg-control .seg,
-[data-theme="dark"] .period .p,
-[data-theme="dark"] .tog-pill {
+[data-theme="dark"] .period .p {
   color: rgba(231, 233, 234, 0.7);
 }
-[data-theme="dark"] .seg-control .seg.active,
-[data-theme="dark"] .period .p.active,
-[data-theme="dark"] .tog-pill.active { color: #fff; background: #1c9cf0; }
+[data-theme="dark"] .period .p.active { color: #fff; background: #1c9cf0; }
 [data-theme="dark"] .rs-row { border-top-color: rgba(255, 255, 255, 0.06); }
 [data-theme="dark"] .rs-head .chev { color: rgba(231, 233, 234, 0.5); }
-[data-theme="dark"] .last-updated { color: rgba(231, 233, 234, 0.45); }
 [data-theme="dark"] .scroll-fade.bottom {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
 }
-[data-theme="dark"] .chip {
-  background: rgba(28, 156, 240, 0.18);
-  border-color: rgba(28, 156, 240, 0.4);
-  color: #1c9cf0;
-}
-[data-theme="dark"] .meta-strip .mpill {
-  background: rgba(28, 156, 240, 0.18);
-  border-color: rgba(28, 156, 240, 0.4);
-  color: #1c9cf0;
+[data-theme="dark"] .sel-chip,
+[data-theme="dark"] .identity .id-pill {
+  background: rgba(28, 156, 240, 0.20);
+  border-color: rgba(28, 156, 240, 0.42);
+  color: #e7e9ea;
 }
 
 /* ---- Chat ---- */

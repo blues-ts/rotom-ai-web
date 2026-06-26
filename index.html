@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>River AI — TCG pricing, powered by AI</title>
-  <meta name="description" content="River AI: scan any trading card, ask River anything, and get real-time market data with grade spreads, charts, and AI-driven analysis." />
+  <title>River AI TCG — pricing, powered by AI</title>
+  <meta name="description" content="River AI TCG: scan any trading card, ask River anything, and get real-time market data with grade spreads, charts, and AI-driven analysis." />
+  <link rel="icon" href="river-logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,9 +16,9 @@
 <!-- ============ NAV ============ -->
 <header class="nav" role="banner">
   <div class="container nav-inner">
-    <a href="index.html" class="brand" aria-label="River AI home">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span>River AI</span>
+    <a href="index.html" class="brand" aria-label="River AI TCG home">
+      <img class="brand-mark" src="river-logo.svg" alt="" aria-hidden="true" />
+      <span>River AI TCG</span>
     </a>
 
     <nav class="nav-links" aria-label="Primary">
@@ -33,7 +34,7 @@
       </button>
 
       <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-      <a class="download-btn compact" href="#" aria-label="Download River AI">
+      <a class="download-btn compact" href="#" aria-label="Download River AI TCG">
         <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
         </svg>
@@ -54,11 +55,11 @@
         TCG pricing, <span class="grad">powered by AI.</span>
       </h1>
       <p class="hero-sub">
-        Scan any card, ask River anything, and get real-time market data across major marketplaces — including raw, PSA, BGS, and CGC graded prices.
+        Scan any card, ask River anything, and get real-time market data across major marketplaces — including raw and graded prices from PSA, BGS, CGC, ACE, TAG, AGS, and SGC.
       </p>
       <div class="hero-ctas">
         <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-        <a class="download-btn" href="#" aria-label="Download River AI">
+        <a class="download-btn" href="#" aria-label="Download River AI TCG">
           <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
           <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
         </a>
@@ -68,11 +69,11 @@
         </a>
       </div>
       <div class="trust-strip" aria-label="Highlights">
-        <span><strong style="color:var(--fg)">27,000+</strong> cards tracked</span>
+        <span><strong style="color:var(--fg)">50,000+</strong> cards tracked</span>
         <span class="dot" aria-hidden="true"></span>
         <span>Live data</span>
         <span class="dot" aria-hidden="true"></span>
-        <span>4 graders supported</span>
+        <span>7 graders supported</span>
       </div>
     </div>
 
@@ -228,119 +229,122 @@
 
               <div class="scroll">
                 <div class="scroll-track">
-                <!-- hero card image -->
+                <!-- floating card image -->
                 <div class="hero-card">
                   <img class="card-img" src="https://images.pokemontcg.io/swsh12/186_hires.png" alt="Lugia V alternate art — Silver Tempest 186/195" />
-                  <div class="pinch">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    Pinch to zoom
-                  </div>
                 </div>
 
-                <!-- estimate -->
-                <div class="app-card estimate">
-                  <div class="label">Estimated Value</div>
-                  <div class="price tnum">$420.00</div>
-                  <div class="chips">
-                    <span class="chip"><span class="pdot"></span>TCGplayer</span>
-                    <span class="chip"><span class="pdot"></span>Near Mint</span>
-                  </div>
-                </div>
+                <!-- counter sheet: every detail as divided rows on one surface -->
+                <div class="sheet">
+                  <div class="grabber"></div>
 
-                <!-- meta strip -->
-                <div class="app-card meta-strip">
-                  <div>
-                    <div class="name">Lugia V<span class="num">#186/195</span></div>
-                    <div class="set">Silver Tempest</div>
-                  </div>
-                  <div class="pills">
-                    <span class="mpill">Alternate Full Art</span>
-                    <span class="mpill">Holofoil</span>
-                  </div>
-                </div>
-
-                <!-- pricing options -->
-                <div class="app-card">
-                  <div class="section-title">Pricing Options</div>
-                  <div class="seg-control">
-                    <span class="seg active">Raw</span>
-                    <span class="seg">Graded</span>
-                  </div>
-                  <div class="mini-label">Source</div>
-                  <div class="tog-pills">
-                    <span class="tog-pill active">Marketplace A</span>
-                    <span class="tog-pill">Marketplace B</span>
-                  </div>
-                  <div class="mini-label">Condition</div>
-                  <div class="cond-pills">
-                    <span class="tog-pill active">Near Mint</span>
-                    <span class="tog-pill">Lightly Played</span>
-                    <span class="tog-pill">Mod. Played</span>
-                    <span class="tog-pill">Heavily Played</span>
-                    <span class="tog-pill">Damaged</span>
-                  </div>
-                  <div class="mini-label">Price Paid</div>
-                  <div class="price-input">
-                    <span class="cur">$</span>
-                    <span class="ph tnum">0.00</span>
-                  </div>
-                </div>
-
-                <!-- price history -->
-                <div class="app-card">
-                  <div class="history-head">
-                    <div class="section-title" style="margin: 0;">Price History</div>
-                    <div class="period">
-                      <span class="p">7D</span>
-                      <span class="p">30D</span>
-                      <span class="p">90D</span>
-                      <span class="p">1Y</span>
-                      <span class="p active">ALL</span>
+                  <!-- market value -->
+                  <div class="sheet-section value">
+                    <div class="mv-label">MARKET VALUE</div>
+                    <div class="mv-price tnum">$420.00</div>
+                    <div class="sel-chips">
+                      <span class="sel-chip"><span class="sdot"></span>Holofoil</span>
+                      <span class="sel-chip"><span class="sdot"></span>Near Mint</span>
                     </div>
                   </div>
-                  <div class="hover-head">
-                    <span class="pv tnum">$420.00</span>
-                    <span class="pd">Apr 1, 2026</span>
-                  </div>
-                  <div class="chart-wrap">
-                    <svg viewBox="0 0 280 130" preserveAspectRatio="none">
-                      <defs>
-                        <linearGradient id="cFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stop-color="#1e9df1" stop-opacity="0.32"/>
-                          <stop offset="100%" stop-color="#1e9df1" stop-opacity="0"/>
-                        </linearGradient>
-                      </defs>
-                      <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22 L280,130 L0,130 Z" fill="url(#cFill)"/>
-                      <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22" fill="none" stroke="#1e9df1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="pulse" style="left: 100%; top: 17%;"></span>
-                  </div>
-                  <div class="hint">Touch and drag to see prices</div>
-                </div>
 
-                <!-- recent sales -->
-                <div class="app-card">
-                  <div class="rs-head">
-                    <div class="section-title" style="margin: 0;">Recent Sales</div>
-                    <span class="chev">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </span>
+                  <div class="sheet-divider"></div>
+
+                  <!-- identity -->
+                  <div class="sheet-section identity">
+                    <div class="id-main">
+                      <div class="id-name">Lugia V<span class="id-num"> #186/195</span></div>
+                      <div class="id-set">Silver Tempest</div>
+                    </div>
+                    <div class="id-pills">
+                      <span class="id-pill">Ultra Rare</span>
+                      <span class="id-pill">Holofoil</span>
+                    </div>
                   </div>
-                  <div class="rs-row">
-                    <div class="l"><div class="d tnum">Mar 28, 2026</div><div class="s">Near Mint · TCGplayer</div></div>
-                    <div class="r"><div class="p tnum">$415.00</div><div class="c">5 sales</div></div>
+
+                  <div class="sheet-divider"></div>
+
+                  <!-- pricing options -->
+                  <div class="sheet-section">
+                    <div class="section-title">Pricing Options</div>
+                    <div class="config-row">
+                      <span class="cfg-label">Variant</span>
+                      <span class="cfg-right">
+                        <span class="cfg-value">Holofoil</span>
+                        <span class="cfg-chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                      </span>
+                    </div>
+                    <div class="config-row last">
+                      <span class="cfg-label">Condition</span>
+                      <span class="cfg-right">
+                        <span class="cfg-value">Near Mint</span>
+                        <span class="cfg-chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                      </span>
+                    </div>
+                    <div class="mini-label">Price Paid</div>
+                    <div class="price-input">
+                      <span class="cur">$</span>
+                      <span class="ph tnum">0.00</span>
+                    </div>
                   </div>
-                  <div class="rs-row">
-                    <div class="l"><div class="d tnum">Mar 24, 2026</div><div class="s">Near Mint · eBay</div></div>
-                    <div class="r"><div class="p tnum">$428.00</div><div class="c">3 sales</div></div>
+
+                  <div class="sheet-divider"></div>
+
+                  <!-- price history -->
+                  <div class="sheet-section">
+                    <div class="history-head">
+                      <div class="section-title" style="margin: 0;">Price History</div>
+                      <div class="period">
+                        <span class="p">7D</span>
+                        <span class="p active">30D</span>
+                        <span class="p">90D</span>
+                        <span class="p">1Y</span>
+                      </div>
+                    </div>
+                    <div class="hover-head">
+                      <span class="pv tnum">$420.00</span>
+                      <span class="pd">Apr 1, 2026</span>
+                    </div>
+                    <div class="chart-wrap">
+                      <svg viewBox="0 0 280 130" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id="cFill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#1e9df1" stop-opacity="0.32"/>
+                            <stop offset="100%" stop-color="#1e9df1" stop-opacity="0"/>
+                          </linearGradient>
+                        </defs>
+                        <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22 L280,130 L0,130 Z" fill="url(#cFill)"/>
+                        <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22" fill="none" stroke="#1e9df1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span class="pulse" style="left: 100%; top: 17%;"></span>
+                    </div>
+                    <div class="hint">Touch and drag to see prices</div>
                   </div>
-                  <div class="rs-row">
-                    <div class="l"><div class="d tnum">Mar 19, 2026</div><div class="s">Near Mint · TCGplayer</div></div>
-                    <div class="r"><div class="p tnum">$410.00</div><div class="c">7 sales</div></div>
+
+                  <div class="sheet-divider"></div>
+
+                  <!-- recent sales -->
+                  <div class="sheet-section">
+                    <div class="rs-head">
+                      <div class="section-title" style="margin: 0;">Recent Sales</div>
+                      <span class="chev">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                      </span>
+                    </div>
+                    <div class="rs-row">
+                      <div class="l"><div class="d tnum">Mar 28, 2026</div><div class="s">Lugia V Alt Art 186/195 NM</div></div>
+                      <div class="r"><div class="p tnum">$415.00</div></div>
+                    </div>
+                    <div class="rs-row">
+                      <div class="l"><div class="d tnum">Mar 24, 2026</div><div class="s">Lugia V Silver Tempest Near Mint</div></div>
+                      <div class="r"><div class="p tnum">$428.00</div></div>
+                    </div>
+                    <div class="rs-row">
+                      <div class="l"><div class="d tnum">Mar 19, 2026</div><div class="s">Lugia V Alt Art PSA-ready NM</div></div>
+                      <div class="r"><div class="p tnum">$410.00</div></div>
+                    </div>
                   </div>
                 </div>
-
-                <div class="last-updated">Last updated Apr 1, 2026</div>
                 </div>
               </div>
               <div class="scroll-fade bottom"></div>
@@ -473,16 +477,12 @@
       <h2 id="stats-title" style="position:absolute; left:-9999px;">By the numbers</h2>
       <div class="stats-grid">
         <div class="stat">
-          <div class="num"><span data-count="27000" data-suffix="+">0</span></div>
+          <div class="num"><span data-count="50000" data-suffix="+">0</span></div>
           <div class="label">Cards tracked</div>
         </div>
         <div class="stat">
-          <div class="num"><span data-count="4">0</span></div>
-          <div class="label">Graders supported · raw, PSA, BGS, CGC</div>
-        </div>
-        <div class="stat">
-          <div class="num"><span data-count="3">0</span></div>
-          <div class="label">Price sources</div>
+          <div class="num"><span data-count="7">0</span></div>
+          <div class="label">Graders supported · PSA, BGS, CGC, ACE, TAG, AGS, SGC</div>
         </div>
         <div class="stat">
           <div class="num">Live</div>
@@ -498,9 +498,9 @@
   <div class="container">
     <div class="reveal">
       <h2 id="cta-title">Stop guessing. Start trading with data.</h2>
-      <p>River AI is free to try.</p>
+      <p>River AI TCG is free to try.</p>
       <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-      <a class="download-btn" href="#" aria-label="Download River AI">
+      <a class="download-btn" href="#" aria-label="Download River AI TCG">
         <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
         <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
       </a>
@@ -513,10 +513,10 @@
   <div class="container footer-grid">
     <div>
       <div class="brand" style="margin-bottom: 8px;">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>River AI</span>
+        <img class="brand-mark" src="river-logo.svg" alt="" aria-hidden="true" />
+        <span>River AI TCG</span>
       </div>
-      <div>© 2026 River AI</div>
+      <div>© 2026 River AI TCG</div>
     </div>
     <nav class="footer-links" aria-label="Footer">
       <a href="privacy.html">Privacy Policy</a>
