@@ -25,6 +25,7 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --maxw: 1180px;
+  --nav-h: 64px;
 }
 
 [data-theme="dark"] {
@@ -43,7 +44,24 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+/* ============ SCROLL SNAP ============ */
+/* Each top-level section snaps into view as you scroll past its boundary.
+   `proximity` (not `mandatory`) so tall sections never trap the scroll. */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--nav-h); /* land just below the sticky nav */
+}
+body > section,
+body > footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none; scroll-behavior: auto; }
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -152,6 +170,7 @@ img, svg { display: block; max-width: 100%; }
   .nav-inner { grid-template-columns: auto 1fr auto; }
 }
 @media (max-width: 480px) {
+  :root { --nav-h: 56px; }
   .nav-inner { height: 56px; gap: 10px; }
   .nav-actions { gap: 8px; }
   .brand { font-size: 16px; }
@@ -241,6 +260,9 @@ img, svg { display: block; max-width: 100%; }
     radial-gradient(900px 600px at 10% 110%, color-mix(in oklab, var(--accent-bg) 70%, transparent), transparent 60%);
   z-index: 0;
   pointer-events: none;
+  /* fade the glow out at the section edges so it never hard-cuts at the seam */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
 }
 .hero .container { position: relative; z-index: 1; }
 .hero-grid {
@@ -951,6 +973,9 @@ section { padding: 88px 0; }
   background:
     radial-gradient(700px 400px at 80% 30%, color-mix(in oklab, var(--accent-bg) 80%, transparent), transparent 70%);
   pointer-events: none;
+  /* fade the glow out at the section edges so it never hard-cuts at the seam */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%);
 }
 .showcase.right .showcase-bg {
   background:
@@ -1007,7 +1032,11 @@ section { padding: 88px 0; }
 
 /* ============ HOW IT WORKS ============ */
 .how {
-  background: linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--accent-bg) 50%, var(--bg)));
+  /* tint glows in the middle and returns to the page bg at both seams */
+  background: linear-gradient(180deg,
+    var(--bg) 0%,
+    color-mix(in oklab, var(--accent-bg) 50%, var(--bg)) 50%,
+    var(--bg) 100%);
 }
 .steps {
   display: grid;
