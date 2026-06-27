@@ -62,6 +62,9 @@ body > footer {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-snap-type: none; scroll-behavior: auto; }
 }
+
+/* No snapping on the legal pages (Terms, Privacy) — they're long-form reading */
+html:has(.legal) { scroll-snap-type: none; }
 html, body {
   margin: 0;
   padding: 0;
