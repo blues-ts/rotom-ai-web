@@ -1,18 +1,13 @@
-// Theme toggle
+// Theme toggle — "deep water" (dark) is the default; initial theme is set by an
+// inline script in each page's <head> to avoid a flash of the wrong theme.
 (function () {
   const root = document.documentElement;
-  const saved = localStorage.getItem('river-theme');
-  if (saved === 'dark' || saved === 'light') {
-    root.setAttribute('data-theme', saved);
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    root.setAttribute('data-theme', 'dark');
-  }
   const btn = document.querySelector('.theme-toggle');
   if (btn) {
     btn.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('river-theme', next);
+      try { localStorage.setItem('river-theme', next); } catch (e) {}
     });
   }
 })();

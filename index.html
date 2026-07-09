@@ -5,10 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>River AI TCG — pricing, powered by AI</title>
   <meta name="description" content="River AI TCG: scan any trading card, ask River anything, and get real-time market data with grade spreads, charts, and AI-driven analysis." />
+  <meta name="theme-color" content="#133A5E" />
   <link rel="icon" href="river-logo.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    (function () {
+      var s; try { s = localStorage.getItem('river-theme'); } catch (e) {}
+      var t = (s === 'light' || s === 'dark') ? s
+        : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,8 +29,8 @@
 
     <nav class="nav-links" aria-label="Primary">
       <a href="#features">Features</a>
+      <a href="#collections">Collections</a>
       <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
     </nav>
 
     <div class="nav-actions">
@@ -35,9 +41,7 @@
 
       <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
       <a class="download-btn compact" href="#" aria-label="Download River AI TCG">
-        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
-        </svg>
+        <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
         <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
       </a>
 
@@ -47,7 +51,6 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-bg" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
       <span class="eyebrow"><span class="dot"></span> Live market data · v1.0</span>
@@ -55,12 +58,12 @@
         TCG pricing, <span class="grad">powered by AI.</span>
       </h1>
       <p class="hero-sub">
-        Scan any card, ask River anything, and get real-time market data across major marketplaces — including raw and graded prices from PSA, BGS, CGC, ACE, TAG, AGS, and SGC.
+        Scan any card, ask River anything, and track your collection with real-time market data — including raw and graded prices from PSA, BGS, CGC, ACE, TAG, AGS, and SGC.
       </p>
       <div class="hero-ctas">
         <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
         <a class="download-btn" href="#" aria-label="Download River AI TCG">
-          <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
           <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
         </a>
         <a class="btn-secondary" href="#features">
@@ -77,43 +80,73 @@
       </div>
     </div>
 
-    <!-- Hero phone: Chat preview -->
+    <!-- Hero phone: Home -->
     <div class="phone-stage" aria-hidden="true">
       <div class="phone-glow"></div>
       <div class="phone tilt-r">
         <div class="phone-screen">
           <div class="phone-island"></div>
-          <div class="mock-chat">
+          <div class="stage">
             <div class="phone-statusbar">
               <span>9:41</span>
               <span class="icons">
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
-                <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
+                <svg width="18" height="11" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
+                <svg width="18" height="13" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
+                <svg width="27" height="12" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
               </span>
             </div>
-            <div class="chat-area">
-              <div class="bubble-user">What's the price trend on Lugia V alt art from Silver Tempest? Is PSA 10 still climbing?</div>
-              <div class="river-reply">
-                <div class="h">Lugia V (Silver Tempest) — quick read</div>
-                <p>Raw NM is holding around <strong>$420</strong> on TCGplayer (<span class="gain">+3.4%</span> over 30d), with eBay tracking close at <strong>$405</strong>.</p>
-                <p><strong>PSA 10 momentum is real:</strong></p>
-                <ul>
-                  <li>7d avg: <strong>$1,475</strong> (<span class="gain">+4.1%</span>)</li>
-                  <li>30d avg: <strong>$1,420</strong> (<span class="gain">+9.6%</span>)</li>
-                  <li>90d avg: <strong>$1,260</strong> (<span class="gain">+18.2%</span>)</li>
-                </ul>
-                <div class="river-typing"><span></span><span></span><span></span></div>
-              </div>
-            </div>
-            <div class="chat-input-wrap">
-              <div class="chat-input">
-                <span class="ph">Ask River</span>
-                <span class="send">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+
+            <div class="mock-home">
+              <div class="app-toolbar">
+                <span class="tb-btn">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.4 2.6a2.1 2.1 0 1 1 3 3L12 15l-4 1 1-4Z"/></svg>
+                </span>
+                <span class="tb-pill">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </span>
               </div>
-              <div class="home-indicator"></div>
+
+              <div class="home-hero">
+                <div class="mascot-badge"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/501.gif" alt="" /></div>
+                <div class="home-name">River</div>
+                <div class="home-sub">Your TCG AI assistant</div>
+
+                <div class="sug-list">
+                  <div class="sug">
+                    <span class="sug-icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
+                    <span class="sug-body">
+                      <span class="sug-over">Your top card</span>
+                      <span class="sug-label">Analyze Bubble Mew</span>
+                    </span>
+                    <span class="sug-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                  </div>
+                  <div class="sug">
+                    <span class="sug-icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20v-8"/><path d="M10 20V6"/><path d="M15 20v-9"/><path d="M20 20V4"/></svg></span>
+                    <span class="sug-label">What's my collection worth?</span>
+                    <span class="sug-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                  </div>
+                  <div class="sug">
+                    <span class="sug-icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>
+                    <span class="sug-label">What should I invest in?</span>
+                    <span class="sug-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                  </div>
+                  <div class="sug">
+                    <span class="sug-icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
+                    <span class="sug-label">How does grading work?</span>
+                    <span class="sug-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dock">
+                <div class="ask-pill">
+                  <span class="ph">Ask River anything…</span>
+                  <span class="send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg></span>
+                </div>
+                <div class="home-indicator"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -134,15 +167,15 @@
     <div class="feature-grid">
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="8" width="10" height="8" rx="1.5"/><circle cx="12" cy="12" r="2"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="8" width="10" height="8" rx="1.5"/><circle cx="12" cy="12" r="2"/></svg>
         </div>
         <h3>Scan any card</h3>
-        <p>Point your camera at a card. Vision AI identifies it and pulls live pricing in seconds — no typing, no SKUs.</p>
+        <p>Point your camera at a card. Vision AI identifies it, pulls live pricing, and adds it to your collection in one tap.</p>
       </article>
 
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="9" cy="11.5" r="0.8" fill="currentColor"/><circle cx="13" cy="11.5" r="0.8" fill="currentColor"/><circle cx="17" cy="11.5" r="0.8" fill="currentColor"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="9" cy="11.5" r="0.8" fill="currentColor"/><circle cx="13" cy="11.5" r="0.8" fill="currentColor"/><circle cx="17" cy="11.5" r="0.8" fill="currentColor"/></svg>
         </div>
         <h3>Chat with River</h3>
         <p>Ask any market question. River uses 7 tools to fetch pricing, history, listings, and grade spreads — and shows its sources.</p>
@@ -150,7 +183,7 @@
 
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
         </div>
         <h3>Live multi-source pricing</h3>
         <p>Three major marketplaces, raw conditions through PSA 10, updated continuously. The full picture, not a snapshot.</p>
@@ -158,7 +191,7 @@
 
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/><path d="M14 8h5v5"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/><path d="M14 8h5v5"/></svg>
         </div>
         <h3>Price history &amp; charts</h3>
         <p>7d, 30d, 90d, 1y, and all-time charts for every tier. Spot trends, not just snapshots.</p>
@@ -166,7 +199,7 @@
 
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="4" height="11" rx="1"/><rect x="10" y="5" width="4" height="15" rx="1"/><rect x="17" y="13" width="4" height="7" rx="1"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20v-8"/><path d="M10 20V6"/><path d="M15 20v-9"/><path d="M20 20V4"/></svg>
         </div>
         <h3>Grade spread analysis</h3>
         <p>Instantly compare raw to PSA 9, PSA 10, BGS 9.5, CGC 10. Spot arbitrage at a glance.</p>
@@ -174,7 +207,7 @@
 
       <article class="feature-card reveal">
         <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <h3>Market signals</h3>
         <p>Volatility, momentum, and liquidity scoring. River highlights conviction-rated opportunities — when it matters.</p>
@@ -185,7 +218,6 @@
 
 <!-- ============ SHOWCASE: CARD DETAIL ============ -->
 <section class="showcase" aria-labelledby="showcase-detail-title">
-  <div class="showcase-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="showcase-grid">
       <div class="showcase-copy reveal">
@@ -194,7 +226,7 @@
         <p>Tap a card and see raw and graded prices side-by-side, with a scrubbable price history and recent comparable sales — pulled from the major marketplaces.</p>
         <ul class="bullet-list">
           <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Raw &amp; graded pricing on one screen</li>
-          <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Scrubbable charts: 7D · 30D · 90D · 1Y · All</li>
+          <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Scrubbable charts: 7D · 30D · 90D · 1Y</li>
           <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Recent comparable sales with source attribution</li>
         </ul>
       </div>
@@ -205,150 +237,141 @@
         <div class="phone tilt-l">
           <div class="phone-screen">
             <div class="phone-island"></div>
-            <div class="mock-detail">
-              <div class="bg-blur"></div>
-              <div class="bg-scrim"></div>
+            <div class="stage">
               <div class="phone-statusbar">
                 <span>9:41</span>
                 <span class="icons">
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
-                  <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
-                  <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
+                  <svg width="18" height="11" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
+                  <svg width="18" height="13" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
+                  <svg width="27" height="12" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
                 </span>
               </div>
 
-              <div class="ios-navbar">
-                <span class="icn-btn">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                </span>
-                <span class="title">Lugia V</span>
-                <span class="icn-btn">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                </span>
-              </div>
-
-              <div class="scroll">
-                <div class="scroll-track">
-                <!-- floating card image -->
-                <div class="hero-card">
-                  <img class="card-img" src="https://images.pokemontcg.io/swsh12/186_hires.png" alt="Lugia V alternate art — Silver Tempest 186/195" />
+              <div class="mock-card">
+                <div class="app-toolbar">
+                  <span class="tb-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  </span>
+                  <span class="title">Lugia V</span>
+                  <span class="tb-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  </span>
                 </div>
 
-                <!-- counter sheet: every detail as divided rows on one surface -->
-                <div class="sheet">
-                  <div class="grabber"></div>
-
-                  <!-- market value -->
-                  <div class="sheet-section value">
-                    <div class="mv-label">MARKET VALUE</div>
-                    <div class="mv-price tnum">$420.00</div>
-                    <div class="sel-chips">
-                      <span class="sel-chip"><span class="sdot"></span>Holofoil</span>
-                      <span class="sel-chip"><span class="sdot"></span>Near Mint</span>
+                <div class="scroll">
+                  <div class="scroll-track">
+                    <!-- floating card image — IMAGE_WIDTH = 90% of screen -->
+                    <div class="dcard-wrap">
+                      <img class="dcard" src="https://images.pokemontcg.io/swsh12/186_hires.png" alt="Lugia V alternate art — Silver Tempest 186/195" />
                     </div>
-                  </div>
 
-                  <div class="sheet-divider"></div>
+                    <!-- the counter sheet: every detail as divided rows on one surface -->
+                    <div class="sheet">
+                      <!-- market value -->
+                      <div class="s-value">
+                        <span class="overline-sm">Market value</span>
+                        <div class="hero-price tnum">$538.08</div>
+                        <div class="sel-chips">
+                          <span class="sel-chip"><span class="mdot"></span>Holofoil</span>
+                          <span class="sel-chip"><span class="mdot"></span>Near Mint</span>
+                        </div>
+                      </div>
 
-                  <!-- identity -->
-                  <div class="sheet-section identity">
-                    <div class="id-main">
-                      <div class="id-name">Lugia V<span class="id-num"> #186/195</span></div>
-                      <div class="id-set">Silver Tempest</div>
-                    </div>
-                    <div class="id-pills">
-                      <span class="id-pill">Ultra Rare</span>
-                      <span class="id-pill">Holofoil</span>
-                    </div>
-                  </div>
+                      <div class="sheet-divider"></div>
 
-                  <div class="sheet-divider"></div>
+                      <!-- identity -->
+                      <div class="meta-strip">
+                        <div class="l">
+                          <div class="meta-name">Lugia V<span class="num"> #186/195</span></div>
+                          <div class="meta-set">Silver Tempest</div>
+                        </div>
+                        <div class="meta-pills">
+                          <span class="meta-pill">Ultra Rare</span>
+                          <span class="meta-pill">Holofoil</span>
+                        </div>
+                      </div>
 
-                  <!-- pricing options -->
-                  <div class="sheet-section">
-                    <div class="section-title">Pricing Options</div>
-                    <div class="config-row">
-                      <span class="cfg-label">Variant</span>
-                      <span class="cfg-right">
-                        <span class="cfg-value">Holofoil</span>
-                        <span class="cfg-chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-                      </span>
-                    </div>
-                    <div class="config-row last">
-                      <span class="cfg-label">Condition</span>
-                      <span class="cfg-right">
-                        <span class="cfg-value">Near Mint</span>
-                        <span class="cfg-chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-                      </span>
-                    </div>
-                    <div class="mini-label">Price Paid</div>
-                    <div class="price-input">
-                      <span class="cur">$</span>
-                      <span class="ph tnum">0.00</span>
-                    </div>
-                  </div>
+                      <div class="sheet-divider"></div>
 
-                  <div class="sheet-divider"></div>
+                      <!-- pricing options -->
+                      <div class="s-section">
+                        <div class="s-title">Pricing Options</div>
+                        <div class="cfg-row">
+                          <span class="cfg-label">Variant</span>
+                          <span class="cfg-right">
+                            <span class="cfg-val">Holofoil</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                          </span>
+                        </div>
+                        <div class="cfg-row last">
+                          <span class="cfg-label">Condition</span>
+                          <span class="cfg-right">
+                            <span class="cfg-val">Near Mint</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                          </span>
+                        </div>
+                        <div class="pp-label">Price Paid</div>
+                        <div class="pp-input">
+                          <span class="cur">$</span>
+                          <span class="ph tnum">0.00</span>
+                        </div>
+                      </div>
 
-                  <!-- price history -->
-                  <div class="sheet-section">
-                    <div class="history-head">
-                      <div class="section-title" style="margin: 0;">Price History</div>
-                      <div class="period">
-                        <span class="p">7D</span>
-                        <span class="p active">30D</span>
-                        <span class="p">90D</span>
-                        <span class="p">1Y</span>
+                      <div class="sheet-divider"></div>
+
+                      <!-- chat about this card -->
+                      <div class="link-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
+                        <span class="lt">Chat about this card</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                      </div>
+
+                      <div class="sheet-divider"></div>
+
+                      <!-- buy on TCGplayer -->
+                      <div class="link-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                        <span class="lt">Buy on TCGplayer</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                      </div>
+
+                      <div class="sheet-divider"></div>
+
+                      <!-- price history -->
+                      <div class="s-section">
+                        <div class="chart-head">
+                          <div class="s-title">Price History</div>
+                          <span class="ranges"><span>7D</span><span class="on">30D</span><span>90D</span><span>1Y</span></span>
+                        </div>
+                        <div class="hover-row">
+                          <span class="pv tnum">$538.08</span>
+                          <span class="pd tnum">Jul 9, 2026</span>
+                        </div>
+                        <svg class="chart-svg" viewBox="0 0 349 180" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="cdFill" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stop-color="#5EB2F5" stop-opacity="0.28"/>
+                              <stop offset="100%" stop-color="#5EB2F5" stop-opacity="0"/>
+                            </linearGradient>
+                          </defs>
+                          <path d="M0,152 L25,148 50,143 75,145 100,134 125,126 150,129 175,113 200,104 225,94 250,83 275,66 300,54 325,38 342,27 L342,180 0,180 Z" fill="url(#cdFill)"/>
+                          <path d="M0,152 L25,148 50,143 75,145 100,134 125,126 150,129 175,113 200,104 225,94 250,83 275,66 300,54 325,38 342,27" fill="none" stroke="#5EB2F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <circle cx="342" cy="27" r="4.5" fill="#5EB2F5"/>
+                        </svg>
+                        <div class="scrub-hint">Touch and drag to see prices</div>
+                      </div>
+
+                      <div class="sheet-divider"></div>
+
+                      <!-- recent sales (collapsed) -->
+                      <div class="sales-head">
+                        <div class="s-title">Recent Sales</div>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                       </div>
                     </div>
-                    <div class="hover-head">
-                      <span class="pv tnum">$420.00</span>
-                      <span class="pd">Apr 1, 2026</span>
-                    </div>
-                    <div class="chart-wrap">
-                      <svg viewBox="0 0 280 130" preserveAspectRatio="none">
-                        <defs>
-                          <linearGradient id="cFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#1e9df1" stop-opacity="0.32"/>
-                            <stop offset="100%" stop-color="#1e9df1" stop-opacity="0"/>
-                          </linearGradient>
-                        </defs>
-                        <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22 L280,130 L0,130 Z" fill="url(#cFill)"/>
-                        <path d="M0,95 L18,90 L36,98 L54,82 L72,86 L90,72 L108,80 L126,68 L144,62 L162,70 L180,54 L198,58 L216,44 L234,48 L252,32 L270,28 L280,22" fill="none" stroke="#1e9df1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <span class="pulse" style="left: 100%; top: 17%;"></span>
-                    </div>
-                    <div class="hint">Touch and drag to see prices</div>
                   </div>
-
-                  <div class="sheet-divider"></div>
-
-                  <!-- recent sales -->
-                  <div class="sheet-section">
-                    <div class="rs-head">
-                      <div class="section-title" style="margin: 0;">Recent Sales</div>
-                      <span class="chev">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                      </span>
-                    </div>
-                    <div class="rs-row">
-                      <div class="l"><div class="d tnum">Mar 28, 2026</div><div class="s">Lugia V Alt Art 186/195 NM</div></div>
-                      <div class="r"><div class="p tnum">$415.00</div></div>
-                    </div>
-                    <div class="rs-row">
-                      <div class="l"><div class="d tnum">Mar 24, 2026</div><div class="s">Lugia V Silver Tempest Near Mint</div></div>
-                      <div class="r"><div class="p tnum">$428.00</div></div>
-                    </div>
-                    <div class="rs-row">
-                      <div class="l"><div class="d tnum">Mar 19, 2026</div><div class="s">Lugia V Alt Art PSA-ready NM</div></div>
-                      <div class="r"><div class="p tnum">$410.00</div></div>
-                    </div>
-                  </div>
-                </div>
                 </div>
               </div>
-              <div class="scroll-fade bottom"></div>
-              <div class="home-indicator"></div>
             </div>
           </div>
         </div>
@@ -359,7 +382,6 @@
 
 <!-- ============ SHOWCASE: CHAT ============ -->
 <section class="showcase right" aria-labelledby="showcase-chat-title">
-  <div class="showcase-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="showcase-grid">
       <div class="showcase-copy reveal">
@@ -379,38 +401,165 @@
         <div class="phone tilt-r">
           <div class="phone-screen">
             <div class="phone-island"></div>
-            <div class="mock-chat">
+            <div class="stage">
               <div class="phone-statusbar">
                 <span>9:41</span>
                 <span class="icons">
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
-                  <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
-                  <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
+                  <svg width="18" height="11" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
+                  <svg width="18" height="13" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
+                  <svg width="27" height="12" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
                 </span>
               </div>
-              <div class="chat-area">
-                <div class="bubble-user">What's the price trend on Lugia V alt art from Silver Tempest? Is PSA 10 still climbing?</div>
-                <div class="river-reply">
-                  <div class="h">Lugia V (Silver Tempest) — quick read</div>
-                  <p>Raw NM is holding around <strong>$420</strong> on TCGplayer (<span class="gain">+3.4%</span> over 30d), with eBay tracking close at <strong>$405</strong>.</p>
-                  <p><strong>PSA 10 momentum is real:</strong></p>
-                  <ul>
-                    <li>7d avg: <strong>$1,475</strong> (<span class="gain">+4.1%</span>)</li>
-                    <li>30d avg: <strong>$1,420</strong> (<span class="gain">+9.6%</span>)</li>
-                    <li>90d avg: <strong>$1,260</strong> (<span class="gain">+18.2%</span>)</li>
-                  </ul>
-                  <p>Grade spread is wide — PSA 9 sits at <strong>$595</strong>, so the 9→10 jump is roughly <span class="gain">+148%</span>. Liquidity is solid (9 PSA 10 sales in 7d).</p>
-                  <p><strong>Conviction:</strong> medium-high on PSA 10. Watch for a pullback if BGS 9.5 starts undercutting.</p>
-                  <div class="river-typing"><span></span><span></span><span></span></div>
-                </div>
-              </div>
-              <div class="chat-input-wrap">
-                <div class="chat-input">
-                  <span class="ph">Ask River</span>
-                  <span class="send">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+
+              <div class="mock-chat">
+                <div class="app-toolbar">
+                  <span class="tb-btn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.4 2.6a2.1 2.1 0 1 1 3 3L12 15l-4 1 1-4Z"/></svg>
+                  </span>
+                  <span class="tb-pill">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                   </span>
                 </div>
+
+                <div class="chat-area">
+                  <div class="bubble-user">What's the price trend on Lugia V alt art? Is PSA 10 still climbing?</div>
+                  <div class="river-reply">
+                    <div class="h">Lugia V (Silver Tempest) — quick read</div>
+                    <p>Raw NM is holding around <strong>$420</strong> on TCGplayer (<span class="gain">+3.4%</span> over 30d), with eBay tracking close at <strong>$405</strong>.</p>
+                    <p><strong>PSA 10 momentum is real:</strong></p>
+                    <ul>
+                      <li>7d avg: <strong>$1,475</strong> (<span class="gain">+4.1%</span>)</li>
+                      <li>30d avg: <strong>$1,420</strong> (<span class="gain">+9.6%</span>)</li>
+                      <li>90d avg: <strong>$1,260</strong> (<span class="gain">+18.2%</span>)</li>
+                    </ul>
+                    <p>Grade spread is wide — PSA 9 sits at <strong>$595</strong>, so the 9→10 jump is roughly <span class="gain">+148%</span>.</p>
+                    <div class="river-typing"><span></span><span></span><span></span></div>
+                  </div>
+                  <div class="chat-fade"></div>
+                </div>
+
+                <div class="dock">
+                  <div class="ask-pill">
+                    <span class="ph">Ask River anything…</span>
+                    <span class="send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg></span>
+                  </div>
+                  <div class="home-indicator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOWCASE: COLLECTIONS ============ -->
+<section id="collections" class="showcase" aria-labelledby="showcase-coll-title">
+  <div class="container">
+    <div class="showcase-grid">
+      <div class="showcase-copy reveal">
+        <span class="eyebrow">Collections</span>
+        <h2 id="showcase-coll-title">Your whole binder, valued in real time.</h2>
+        <p>Organize cards into collections and watch your portfolio move with the market — every card priced at its exact variant, condition, and grade.</p>
+        <ul class="bullet-list">
+          <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Portfolio value with 7D through all-time charts</li>
+          <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Graded pricing per card — PSA, BGS, CGC &amp; more</li>
+          <li><span class="bdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Batch-scan cards straight into a collection</li>
+        </ul>
+      </div>
+
+      <!-- Collections phone mockup -->
+      <div class="phone-stage reveal" aria-hidden="true">
+        <div class="phone-glow"></div>
+        <div class="phone tilt-l">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <div class="stage">
+              <div class="phone-statusbar">
+                <span>9:41</span>
+                <span class="icons">
+                  <svg width="18" height="11" viewBox="0 0 14 9" fill="currentColor"><rect x="0" y="5" width="2" height="4" rx="0.5"/><rect x="3.5" y="3" width="2" height="6" rx="0.5"/><rect x="7" y="1" width="2" height="8" rx="0.5"/><rect x="10.5" y="0" width="2" height="9" rx="0.5"/></svg>
+                  <svg width="18" height="13" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4 Q7 -1 13 4"/><path d="M3.5 6 Q7 2.5 10.5 6"/><circle cx="7" cy="8" r="0.7" fill="currentColor"/></svg>
+                  <svg width="27" height="12" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="18" height="9" rx="2"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.4" fill="currentColor"/></svg>
+                </span>
+              </div>
+
+              <div class="mock-coll">
+                <div class="app-toolbar">
+                  <span class="tb-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  </span>
+                  <span class="title">Collections</span>
+                  <span class="tb-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  </span>
+                </div>
+
+                <!-- portfolio hero — rests directly on the gradient, no card chrome -->
+                <div class="pf-hero">
+                  <span class="overline-sm">Portfolio Value</span>
+                  <div class="pf-num tnum">$425,227.09</div>
+                  <div class="pf-gain tnum">+$38,204.11 (9.9%)</div>
+                  <svg viewBox="0 0 353 130" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="pfFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#5EB2F5" stop-opacity="0.28"/>
+                        <stop offset="100%" stop-color="#5EB2F5" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,112 L47,109 94,107 141,104 176,100 212,94 235,86 259,71 282,51 306,28 329,14 347,9 L347,130 0,130 Z" fill="url(#pfFill)"/>
+                    <path d="M0,112 L47,109 94,107 141,104 176,100 212,94 235,86 259,71 282,51 306,28 329,14 347,9" fill="none" stroke="#5EB2F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="347" cy="9" r="4.5" fill="#5EB2F5"/>
+                  </svg>
+                  <div class="ranges center"><span>7D</span><span class="on">30D</span><span>90D</span><span>1Y</span><span>ALL</span></div>
+                </div>
+
+                <div class="coll-list">
+                  <div class="coll-card">
+                    <div class="cc-head">
+                      <div>
+                        <div class="cc-title">My Collection</div>
+                        <div class="cc-sub">9 cards</div>
+                      </div>
+                      <div class="cc-val">
+                        <div class="overline-sm">Total value</div>
+                        <div class="cc-num tnum">$9,800.80</div>
+                      </div>
+                    </div>
+                    <div class="cc-thumbs">
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/base1/58.png" alt="" /></span>
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" /></span>
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/sv3pt5/151.png" alt="" /></span>
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" /></span>
+                    </div>
+                  </div>
+
+                  <div class="coll-card">
+                    <div class="cc-head">
+                      <div>
+                        <div class="cc-title">For Sale</div>
+                        <div class="cc-sub">6 cards</div>
+                      </div>
+                      <div class="cc-val">
+                        <div class="overline-sm">Total value</div>
+                        <div class="cc-num tnum">$415,426.29</div>
+                      </div>
+                    </div>
+                    <div class="cc-thumbs">
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/swsh7/218.png" alt="" /></span>
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" /></span>
+                      <span class="cc-thumb"><img src="https://images.pokemontcg.io/base1/4.png" alt="" /></span>
+                      <span class="cc-thumb">
+                        <img src="https://images.pokemontcg.io/sv3pt5/6.png" alt="" />
+                        <span class="cc-more">+2</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="home-indicator"></div>
               </div>
             </div>
@@ -501,7 +650,7 @@
       <p>River AI TCG is free to try.</p>
       <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
       <a class="download-btn" href="#" aria-label="Download River AI TCG">
-        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
         <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
       </a>
     </div>
