@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["62CHPT3PQ4.com.riverai.app"],
+        "components": [{ "/": "/card/*" }]
+      }
+    ]
+  }
+}
