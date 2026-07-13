@@ -53,10 +53,15 @@ export default {
       // No/invalid image param — preview falls back to text-only.
     }
 
-    const title = price ? `${name} — ${price}` : name;
-    const description = selection
-      ? `${selection} · Live prices in River AI`
-      : "Live prices in River AI";
+    // Title leads with what-it-is: "PSA 10 — $1,234.56" / "NM — $9.99".
+    // The card name lives in the description (and on the card image itself).
+    const title =
+      selection && price
+        ? `${selection} — ${price}`
+        : price
+          ? `${name} — ${price}`
+          : name;
+    const description = `${name} · Live prices in River AI`;
     const canonical = `https://rivertcg.com/card/${encodeURIComponent(match[1])}`;
 
     const html = `<!DOCTYPE html>
