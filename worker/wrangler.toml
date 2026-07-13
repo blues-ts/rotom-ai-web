@@ -1,0 +1,9 @@
+name = "rivertcg-card-preview"
+main = "src/index.js"
+compatibility_date = "2026-07-13"
+
+# Intercepts ONLY shared-card links; the rest of rivertcg.com stays on
+# GitHub Pages. Requires the rivertcg.com zone on this Cloudflare account.
+routes = [
+  { pattern = "rivertcg.com/card/*", zone_name = "rivertcg.com" }
+]
