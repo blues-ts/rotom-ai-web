@@ -46,105 +46,170 @@
     }
   }
 
-  // ---- Particle fields (hero, closing, footer) ----
-  // Fine ice-blue motes: a pre-rendered glow sprite, slow upward drift,
-  // time-based sway (no per-frame jitter), gentle twinkle.
+  // ---- Particle stream (hero, closing, footer) ----
+  // Motes drift left-to-right along a shared sine band rather than falling:
+  // three summed waves give the ribbon its organic shape, each mote fades in
+  // and out over its own lifetime, and drawing is additive so overlaps bloom.
   const canvases = document.querySelectorAll('[data-particles]');
-  if (canvases.length && !reduced) {
-    // one shared sprite: bright core fading into a soft halo
-    const SPRITE = 64;
-    const sprite = document.createElement('canvas');
-    sprite.width = sprite.height = SPRITE;
-    const sctx = sprite.getContext('2d');
-    const grad = sctx.createRadialGradient(SPRITE / 2, SPRITE / 2, 0, SPRITE / 2, SPRITE / 2, SPRITE / 2);
-    grad.addColorStop(0, 'rgba(225, 240, 255, 1)');
-    grad.addColorStop(0.18, 'rgba(190, 224, 255, 0.55)');
-    grad.addColorStop(0.5, 'rgba(124, 192, 255, 0.12)');
-    grad.addColorStop(1, 'rgba(124, 192, 255, 0)');
-    sctx.fillStyle = grad;
-    sctx.fillRect(0, 0, SPRITE, SPRITE);
-
+  if (canvases.length) {
     canvases.forEach((canvas) => {
-      const ctx = canvas.getContext('2d');
-      let w = 0, h = 0, dots = [], running = false, rafId = 0;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      if (!ctx) return;
 
-      function size() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        const dpr = Math.min(2, window.devicePixelRatio || 1);
-        w = Math.max(1, rect.width);
-        h = Math.max(1, rect.height);
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const target = Math.round(Math.min(55, (w * h) / 30000));
-        dots = Array.from({ length: target }, () => spawn(true));
-      }
+      const host = canvas.parentElement;
+      const centerY = parseFloat(canvas.dataset.center) || 0.5;   // band position
+      const amp = parseFloat(canvas.dataset.amp) || 0.15;         // band height
+      const density = parseFloat(canvas.dataset.density) || 90;   // motes per 1000px
+      const fadeY = canvas.dataset.fade ? parseFloat(canvas.dataset.fade) : null;
+      const FADE_R = 0.09, FADE_CEIL = 0.22; // dim the band where text sits
 
-      function spawn(anywhere) {
-        const depth = Math.random();                 // 0 = far, 1 = near
+      let w = 0, h = 0, dots = [], rafId = null, last = 0;
+      let onScreen = false, pageVisible = !document.hidden;
+
+      function spawn(scattered) {
+        const life = 4 + Math.random() * 5;
+        // mostly accent blue, a few bright ice-white sparkles
+        const hue = Math.random() > 0.78 ? 0.55 + Math.random() * 0.45 : Math.random() * 0.45;
         return {
-          x: Math.random() * w,
-          y: anywhere ? Math.random() * h : h + 10,
-          size: 2.5 + depth * 5,                     // sprite draw size (halo included)
-          vy: (0.02 + depth * 0.05),                 // px per ms-ish (scaled below)
-          swayAmp: 4 + Math.random() * 10,
-          swaySpeed: 0.00015 + Math.random() * 0.00025, // rad per ms — slow
+          x: Math.random() * (w + 80) - 40,
+          yOffset: (Math.random() - 0.5) * 90,
           phase: Math.random() * Math.PI * 2,
-          a: 0.12 + depth * 0.3,
-          twSpeed: 0.0004 + Math.random() * 0.0008,
-          twPhase: Math.random() * Math.PI * 2,
+          speed: 14 + Math.random() * 32,      // px per second, rightward
+          size: 0.6 + Math.random() * 1.8,
+          life: life,
+          age: scattered ? Math.random() * life : 0,
+          twinkle: 1.6 + Math.random() * 3.2,
+          hue: hue,
         };
       }
 
-      let last = 0;
-      function frame(t) {
-        if (!running) return;
-        const dt = last ? Math.min(50, t - last) : 16;
-        last = t;
+      // #3B9DF2 accent → #E1F0FF ice white as hue goes 0 → 1
+      function rgba(d, a) {
+        const r = Math.round(59 + 166 * d.hue);
+        const g = Math.round(157 + 83 * d.hue);
+        const b = Math.round(242 + 13 * d.hue);
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+      }
+
+      // three summed sines — the band's shape at a given x and time
+      function band(x, t) {
+        return (0.55 * Math.sin(0.0042 * x + 0.18 * t) +
+                0.32 * Math.sin(0.011 * x + 0.42 * t + 1.7) +
+                0.13 * Math.sin(0.022 * x + 0.65 * t + 3.1)) * amp * h;
+      }
+
+      function size() {
+        const rect = host.getBoundingClientRect();
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        w = Math.max(1, Math.floor(rect.width));
+        h = Math.max(1, Math.floor(rect.height));
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const target = Math.max(8, Math.floor((w / 1000) * density));
+        while (dots.length < target) dots.push(spawn(true));
+        while (dots.length > target) dots.pop();
+      }
+
+      function draw(now) {
+        const dt = Math.min(0.05, (now - (last || now)) / 1000);
+        last = now;
+        const t = now / 1000;
+        const mid = centerY * h;
+
         ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+
         for (let i = 0; i < dots.length; i++) {
           const d = dots[i];
-          d.y -= d.vy * dt * 0.6;
-          if (d.y < -10) { dots[i] = spawn(false); continue; }
-          const px = d.x + Math.sin(t * d.swaySpeed + d.phase) * d.swayAmp;
-          const tw = 0.75 + 0.25 * Math.sin(t * d.twSpeed + d.twPhase);
-          ctx.globalAlpha = d.a * tw;
-          ctx.drawImage(sprite, px - d.size / 2, d.y - d.size / 2, d.size, d.size);
+          d.x += d.speed * dt;
+          d.age += dt;
+          if (d.x > w + 20 || d.age > d.life) { dots[i] = spawn(false); continue; }
+
+          const y = mid + band(d.x + 50 * d.phase, t) +
+                    d.yOffset * (0.4 + 0.6 * Math.sin(d.phase + 0.3 * t));
+
+          // fade in over life, twinkle, and never exceed half opacity
+          let a = Math.min(0.5, Math.max(0,
+            Math.sin(Math.PI * (d.age / d.life)) *
+            (0.55 + 0.45 * Math.sin(t * d.twinkle + 4 * d.phase)) * 0.5));
+
+          // keep the band quiet where headline text sits
+          if (fadeY !== null) {
+            const dist = Math.abs(y / h - fadeY) / FADE_R;
+            if (dist < 1) {
+              const ceil = FADE_CEIL + (1 - FADE_CEIL) * dist;
+              if (a > ceil) a = ceil;
+            }
+          }
+          if (a < 0.01) continue;
+
+          const halo = 6 * d.size;
+          const g = ctx.createRadialGradient(d.x, y, 0, d.x, y, halo);
+          g.addColorStop(0, rgba(d, a * 0.55));
+          g.addColorStop(1, rgba(d, 0));
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(d.x, y, halo, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = rgba(d, Math.min(1, a * 1.1));
+          ctx.beginPath();
+          ctx.arc(d.x, y, d.size, 0, Math.PI * 2);
+          ctx.fill();
         }
-        ctx.globalAlpha = 1;
-        rafId = requestAnimationFrame(frame);
+
+        ctx.globalCompositeOperation = 'source-over';
+        rafId = requestAnimationFrame(draw);
       }
 
       function start() {
-        if (running) return;
-        running = true;
+        if (reduced || rafId !== null || !onScreen || !pageVisible) return;
         last = 0;
-        rafId = requestAnimationFrame(frame);
+        rafId = requestAnimationFrame(draw);
       }
       function stop() {
-        running = false;
-        cancelAnimationFrame(rafId);
+        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+      }
+
+      // reduced motion: one still frame of the band, no animation
+      function paintStill() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        const mid = centerY * h;
+        dots.forEach((d) => {
+          const y = mid + band(d.x, 0) + 0.5 * d.yOffset;
+          ctx.fillStyle = rgba(d, 0.5);
+          ctx.beginPath();
+          ctx.arc(d.x, y, d.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalCompositeOperation = 'source-over';
       }
 
       size();
-      window.addEventListener('resize', size);
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stop(); else if (visible) start();
-      });
-
-      // only animate while the section is on screen
-      let visible = false;
-      if ('IntersectionObserver' in window) {
+      if (reduced) {
+        paintStill();
+      } else if ('IntersectionObserver' in window) {
         new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            visible = e.isIntersecting;
-            if (visible) start(); else stop();
-          });
-        }).observe(canvas.parentElement);
+          onScreen = !!(entries[0] && entries[0].isIntersecting);
+          if (onScreen) start(); else stop();
+        }, { threshold: 0 }).observe(canvas);
       } else {
-        visible = true;
+        onScreen = true;
         start();
       }
+
+      document.addEventListener('visibilitychange', () => {
+        pageVisible = !document.hidden;
+        if (pageVisible) start(); else stop();
+      });
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { size(); if (reduced) paintStill(); }, 150);
+      });
     });
   }
 
