@@ -257,6 +257,7 @@
     const stepItems = scanScroll.querySelectorAll('.step-item');
     const counter = scanScroll.querySelector('.step-counter .cur');
     const ovAdded = scanScroll.querySelector('.ov-added');
+    const STEPS = stepItems.length;
     let current = -1;
 
     function setStep(idx) {
@@ -265,14 +266,14 @@
       scanPhone.dataset.step = idx;
       stepItems.forEach((s, i) => s.classList.toggle('on', i === idx));
       if (counter) counter.textContent = '0' + (idx + 1);
-      ovAdded && ovAdded.classList.toggle('show', idx === 3);
+      ovAdded && ovAdded.classList.toggle('show', idx === STEPS - 1);
     }
 
     function onScanScroll() {
       const rect = scanScroll.getBoundingClientRect();
       const total = scanScroll.offsetHeight - window.innerHeight;
       const progress = Math.min(1, Math.max(0, -rect.top / total));
-      setStep(Math.min(3, Math.floor(progress * 4)));
+      setStep(Math.min(STEPS - 1, Math.floor(progress * STEPS)));
     }
     setStep(0);
     onScanScroll();

@@ -438,7 +438,7 @@ img, svg, canvas { display: block; max-width: 100%; }
 .sect-head.center .eyebrow::before { display: none; }
 
 /* ============ SCAN — sticky scroll story ============ */
-.scan-scroll { position: relative; height: 340vh; }
+.scan-scroll { position: relative; height: 400vh; }
 .scan-sticky {
   position: sticky;
   top: 0;
@@ -695,6 +695,8 @@ img, svg, canvas { display: block; max-width: 100%; }
 }
 .phone-screen {
   position: relative;
+  /* in-screen overlays size their type off the screen width */
+  container-type: inline-size;
   width: 100%;
   height: 100%;
   border-radius: 39px;
@@ -716,9 +718,76 @@ img, svg, canvas { display: block; max-width: 100%; }
   opacity: 0;
   transition: opacity 0.55s ease;
 }
-.scan-phone[data-step="1"] .shot-b,
 .scan-phone[data-step="2"] .shot-b,
-.scan-phone[data-step="3"] .shot-b { opacity: 1; }
+.scan-phone[data-step="3"] .shot-b,
+.scan-phone[data-step="4"] .shot-b { opacity: 1; }
+/* configure step: raw sheet holds, graded crossfades over it on a loop */
+.shot-c, .shot-d { opacity: 0; transition: opacity 0.55s ease; }
+.scan-phone[data-step="3"] .shot-c { opacity: 1; }
+.scan-phone[data-step="3"] .shot-d { animation: config-flip 6s ease-in-out infinite; }
+@keyframes config-flip {
+  0%, 32% { opacity: 0; }
+  45%, 82% { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+
+/* scan tray — sits in the sheet body of the scanner shot, in the slot the
+   "Align the card inside the frame" caption yields once cards land. The band
+   is painted in the sheet's own fill so it erases the caption underneath.
+   Geometry is measured off screens/scanner.webp; percentages keep it locked
+   to the screenshot at every phone size. */
+.ov-tray {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 69.5%;
+  bottom: 10.4%;
+  z-index: 4;
+  background: #182b42;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.scan-phone[data-step="1"] .ov-tray { opacity: 1; }
+.tray-item {
+  position: absolute;
+  left: 5.1%;
+  top: 5%;
+  width: 25.5%;
+}
+.tray-item > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.5 / 3.5;
+  object-fit: contain;
+}
+/* remove badge — overhangs the artwork's top-right corner */
+.tray-x {
+  position: absolute;
+  top: -1.5cqw;
+  right: -1.5cqw;
+  width: 5.6cqw;
+  height: 5.6cqw;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(8, 24, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.tray-x svg { width: 2.8cqw; height: 2.8cqw; }
+.tray-price {
+  display: block;
+  margin-top: 2.5%;
+  text-align: center;
+  font-size: 4.05cqw;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
 
 /* ============ FEATURE GRID — the rest of the toolkit ============ */
 .grid-sect .sect-head { margin-bottom: 5vh; }
@@ -949,6 +1018,9 @@ img, svg, canvas { display: block; max-width: 100%; }
     transform: none !important;
     transition: none !important;
   }
+  /* configure step settles on the raw sheet — no looping flip */
+  .ov-tray, .shot-c, .shot-d { transition: none !important; }
+  .shot-d { animation: none !important; }
   .ambient i, .scan-phone, .scroll-cue i::after, .hero-eyebrow .dot {
     animation: none !important;
   }
