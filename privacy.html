@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Privacy Policy — River AI TCG</title>
-  <meta name="description" content="How River AI TCG handles your data — what we collect, what we don't, and the choices you have." />
+  <meta name="description" content="How River AI TCG handles your data — what we collect, what stays on your device, and the choices you have." />
   <meta name="theme-color" content="#0B0D11" />
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -33,11 +33,16 @@
 <main class="legal">
   <div class="container">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: June 26, 2026</p>
+    <p class="updated">Last updated: August 13, 2026</p>
 
     <h2>Overview</h2>
-    <p>River AI TCG is a Pokémon TCG card pricing and collection app. This Privacy Policy explains what information we collect when you use the River AI TCG mobile app, how we use it, and the choices you have. By using River AI TCG you agree to this policy.</p>
-    <p>This policy covers data and privacy. The prices, market-analysis "signals," and AI responses in the app are informational only and are <strong>not</strong> financial or investment advice — see Section&nbsp;7 of our <a href="terms.html">Terms of Service</a> for that.</p>
+    <p>River AI TCG is a Pokémon TCG pricing, collection, and selling-inventory app. This Privacy Policy explains what information we collect when you use the River AI TCG mobile app, how we use it, and the choices you have. By using River AI TCG you agree to this policy.</p>
+    <p>This policy covers data and privacy. The prices, portfolio values, market-analysis "signals," and AI responses in the app are informational only and are <strong>not</strong> financial or investment advice — see Section&nbsp;7 of our <a href="terms.html">Terms of Service</a> for that.</p>
+    <p>Two things are worth knowing up front, because they shape everything below:</p>
+    <ul>
+      <li><strong>Card scanning happens entirely on your device.</strong> Camera images are never uploaded to us or to anyone else.</li>
+      <li><strong>Your collection is stored on our servers.</strong> If you subscribe to Pro, the collections, favorites, selling inventory, and portfolio history you build in the app are kept in our database so they survive a lost phone and stay consistent across your devices. An earlier version of this app stored that data only on-device; that is no longer how it works.</li>
+    </ul>
 
     <h2>Information we collect</h2>
 
@@ -50,58 +55,84 @@
       <li>A unique user identifier</li>
     </ul>
     <p>We store these fields in our database and use them to identify you across sessions. We never see your password — that's handled by Apple or Google.</p>
+    <p>We also store <strong>your device's time zone</strong>, which the app sends when you sign in. We use it for one purpose: deciding when "today" ends for you, so your daily portfolio snapshot is taken at the right local boundary.</p>
 
     <h3>Subscription information</h3>
-    <p>If you subscribe to River AI TCG Pro, the transaction is processed by the Apple App Store or Google Play and managed by a third-party subscription-management service. We don't see or store your payment card. The subscription-management service shares the following with us:</p>
+    <p>If you subscribe to River AI TCG Pro, the transaction is processed by the Apple App Store and managed by a third-party subscription-management service. We don't see or store your payment card. In connection with your subscription we store:</p>
     <ul>
-      <li>An anonymous customer ID linked to your account</li>
-      <li>Your subscription status, tier, and renewal or expiry dates</li>
+      <li>A customer identifier that links your account to the subscription-management service</li>
+      <li>Your Pro entitlement status and its expiry date</li>
+      <li>The time we last verified that status</li>
     </ul>
+    <p>We verify your entitlement against the subscription-management service directly rather than trusting the app, so a claim from a modified client can't unlock paid features.</p>
 
-    <h3>Card scanning images</h3>
-    <p>When you use the camera scan feature, the image is captured locally, encoded, and sent to our backend. The backend forwards a resized version to a third-party AI provider for card identification. Neither the app nor our backend retains the image after the analysis completes.</p>
+    <h3>Your collection, selling inventory, and portfolio</h3>
+    <p>This is the most significant category of personal data we hold, and it is stored on our servers. For Pro subscribers we store:</p>
+    <ul>
+      <li><strong>Collections</strong> — the collections you create and every card or sealed product in them, including the exact variant, condition, grading company and grade, and how many copies you own</li>
+      <li><strong>Prices paid</strong> — the cost basis you optionally record for each copy</li>
+      <li><strong>Favorites</strong> — the products on your watchlists, and the lists themselves</li>
+      <li><strong>Selling inventory ("Vending")</strong> — items you list for sale, their groups, your asking prices, and for completed sales the sold price, the sale date, and the market value at the time of sale</li>
+      <li><strong>Portfolio history</strong> — a daily snapshot of your collection's total value, taken once per day in your local time zone</li>
+      <li><strong>A record of changes</strong> — when you add, remove, reconfigure, or reprice an item, we append an immutable entry recording what changed and the market values at that moment. This is what makes it possible to tell apart "your collection is worth more because the market moved" from "your collection is worth more because you bought something," without rewriting past snapshots</li>
+      <li><strong>Synchronization bookkeeping</strong> — a change log and a record of the operation IDs your device has sent, so an interrupted request is never applied twice</li>
+    </ul>
+    <p>Taken together, this is a detailed financial record of what you own, what you paid, what you sold, and what it has all been worth over time. We treat it accordingly: it is tied to your account, it is never sold, and it is never shared with advertisers or data brokers. It is deleted immediately and permanently when you delete your account.</p>
+    <p>Your device also keeps a local copy of this data in an on-device database so the app can render instantly. That local copy is a cache; our servers are authoritative. The app requires an internet connection to work.</p>
+
+    <h3>Card scanning</h3>
+    <p>When you scan a card with the camera — a single card or a whole binder page — the recognition runs <strong>entirely on your device</strong> using a machine-learning model bundled inside the app. Camera frames, the photos taken during a scan, and any text read off a card by on-device OCR are processed locally and are <strong>never transmitted to our servers or to any third party</strong>. We do not receive, store, or see them. What leaves your device is at most the identifier of the card you chose to add to a collection.</p>
+
+    <h3>Chat content</h3>
+    <p>When you chat with the in-app AI assistant ("River"), the most recent messages in the conversation are sent to our backend, which forwards them to a third-party AI provider to generate a response that is streamed back to you. We do <strong>not</strong> store your chat messages or conversation history on our servers after responding. Your conversation lives in the app on your device and is not backed up to us.</p>
+    <p><strong>The assistant can read your collection.</strong> When you ask River about your own inventory — "what are my most valuable cards," "how has my portfolio done this month," "which of my raw cards are worth grading" — it queries your stored collection, favorites, selling inventory, and portfolio history directly on our servers, using your authenticated identity. The relevant results become part of what is sent to the AI provider to answer that question. The app no longer attaches a copy of your collection to every message; data is read only when a question calls for it.</p>
+    <p><strong>The assistant can propose changes, but never makes them.</strong> River can prepare a proposal to add a card to a collection or watchlist, add an item to your selling inventory, set an asking price, or mark an item sold. Proposals are inert: nothing is written to your account until you confirm it yourself in the app.</p>
 
     <h3>Card images displayed in the app</h3>
-    <p>The card artwork and product photos you see in the app are loaded directly from third-party image hosts (the image servers of our market-data provider and the marketplaces it aggregates), rather than from our own servers. When your device loads one of these images, the hosting service receives your device's IP address and standard request information, as it would for any image on the internet. We don't control those hosts' logging; their own privacy policies apply.</p>
+    <p>The card artwork and product photos you see in the app are loaded directly from third-party image hosts (the image servers of our market-data provider), rather than from our own servers. When your device loads one of these images, the hosting service receives your device's IP address and standard request information, as it would for any image on the internet. We don't control those hosts' logging; their own privacy policies apply.</p>
 
-    <h3>Chat content and collection context</h3>
-    <p>When you chat with the in-app AI assistant ("River"), your messages and the conversation history are sent to our backend. If you choose to share a snapshot of your collection, that snapshot is sent with the request. The backend forwards them to a third-party AI provider to generate the response, which is streamed back to you. We do <strong>not</strong> store chat messages, conversation history, or collection snapshots on our backend after responding.</p>
+    <h3>Shared card links</h3>
+    <p>If you share a card from the app, we generate a link on our domain that carries the card's name, the price and configuration you were viewing, and the card's image URL. That link is served by a third-party edge-network provider so that messaging apps can render a preview. Anyone you send the link to — and the messaging platform that unfurls it — can see those details. We don't attach your identity to a shared link, and we don't log who opened one. Only you decide whether to share.</p>
 
-    <h3>Server logs</h3>
-    <p>Our backend writes operational logs to local files. These may include request timestamps, endpoint paths, AI token-usage counts, user identifiers, and error stack traces (which can incidentally contain message snippets in development environments). We do not currently use third-party log-aggregation or error-tracking services.</p>
+    <h3>Server logs and usage counters</h3>
+    <p>Our backend writes operational logs. These may include request timestamps, endpoint paths, request identifiers, user identifiers, AI token-usage counts, the number of items in a request, and error stack traces. In production these logs go to our hosting provider's standard log stream. We do not currently use third-party log-aggregation, analytics, or error-tracking services.</p>
+    <p>We also keep a short-lived counter of your daily AI token usage to enforce fair-use limits. It expires automatically after 48 hours.</p>
 
     <h2>Information we do NOT collect</h2>
     <p>We've designed River AI TCG to minimize data collection. We do not:</p>
     <ul>
-      <li>Run analytics or tracking SDKs</li>
+      <li>Run analytics, attribution, or tracking SDKs</li>
       <li>Collect your location, contacts, microphone audio, or photo library</li>
+      <li>Upload camera images or anything else the scanner sees</li>
       <li>Track you across other apps or websites</li>
       <li>Use advertising identifiers, fingerprinting, or marketing cookies</li>
-      <li>Persist your chat history, search history, or scanned card images on our servers</li>
+      <li>Store your chat messages or conversation history on our servers</li>
+      <li>Collect the answers you give during onboarding — those stay in the app's memory and are discarded</li>
     </ul>
-
-    <h2>Data stored only on your device</h2>
-    <p>Your collections, chat history, prices paid, and condition preferences are stored in a local database <strong>on your device</strong>. This data only leaves your device when you explicitly attach a collection snapshot to a chat request. We do not back it up to our servers automatically — if you uninstall the app or wipe the device, that data is gone.</p>
 
     <h2>Third-party services</h2>
     <p>River AI TCG relies on the following categories of providers. Each has its own privacy policy, which governs how they handle data we share with them:</p>
     <ul>
-      <li>Authentication providers (e.g., Apple and Google sign-in)</li>
-      <li>Payment processors (e.g., Apple App Store and Google Play)</li>
+      <li>An authentication provider (for Apple and Google sign-in)</li>
+      <li>The Apple App Store, as payment processor</li>
       <li>A subscription-management provider</li>
-      <li>An AI provider for chat responses and card-image analysis</li>
+      <li>An AI provider for chat responses</li>
       <li>A pricing-data provider that aggregates data from major TCG marketplaces</li>
-      <li>A database provider for user-profile storage</li>
+      <li>A cloud hosting provider, where our servers and database run</li>
+      <li>An edge-network provider that renders previews for shared card links</li>
       <li>Mobile app build and delivery infrastructure</li>
     </ul>
-    <p><strong>About AI training.</strong> We use our AI provider's paid API. Under that API's terms, the content we send it — your chat messages, any collection snapshot you attach, and card-scan images — is processed only to generate a response for you and is <strong>not</strong> used to train or improve the provider's general models. The provider may retain inputs transiently for abuse and safety monitoring as described in its API terms. We'll update this policy if our configuration changes.</p>
+    <p>Card scanning is <strong>not</strong> in this list, because no third party is involved: the model runs on your device.</p>
+    <p><strong>About AI training.</strong> We use our AI provider's paid API. Under that API's terms, the content we send it — your chat messages and any collection data read to answer your question — is processed only to generate a response for you and is <strong>not</strong> used to train or improve the provider's general models. The provider may retain inputs transiently for abuse and safety monitoring as described in its API terms. We'll update this policy if our configuration changes.</p>
 
     <h2>How we use your information</h2>
     <ul>
-      <li>To operate the app — sign you in, fetch pricing, run AI features</li>
+      <li>To operate the app — sign you in, store and synchronize your collection, fetch pricing, run AI features</li>
+      <li>To calculate your portfolio value and its history</li>
+      <li>To decide which market prices to refresh — our background price updates only cover products someone actually holds in a collection or has actively listed for sale</li>
       <li>To process subscriptions and unlock entitlements</li>
       <li>To communicate with you about service issues, security, and material changes</li>
-      <li>To prevent fraud, abuse, and Terms violations</li>
+      <li>To prevent fraud, abuse, and Terms violations, and to enforce fair-use limits</li>
     </ul>
 
     <h2>Sharing and disclosure</h2>
@@ -109,12 +140,16 @@
 
     <h2>Data retention and deletion</h2>
     <ul>
-      <li><strong>Profile data</strong> — retained until you request deletion</li>
-      <li><strong>Server logs</strong> — retained for operational purposes; rotated periodically</li>
-      <li><strong>Pricing cache</strong> — up to 24 hours</li>
-      <li><strong>Chat messages and collection snapshots in transit</strong> — discarded once the response is returned</li>
+      <li><strong>Profile data</strong> — retained until you delete your account</li>
+      <li><strong>Collections, favorites, selling inventory, portfolio history, and the change record</strong> — retained until you delete your account. We keep them indefinitely, including if your Pro subscription lapses, so that resubscribing restores everything exactly as you left it</li>
+      <li><strong>Chat messages</strong> — never stored on our servers; discarded once the response is returned</li>
+      <li><strong>Camera images</strong> — never received by our servers</li>
+      <li><strong>Market prices and catalog data</strong> — these describe cards, not people. They are not personal data and are retained after account deletion</li>
+      <li><strong>Daily AI usage counters</strong> — expire after 48 hours</li>
+      <li><strong>Server logs</strong> — retained for operational purposes and rotated periodically</li>
     </ul>
-    <p>We don't currently have an in-app account-deletion button. To delete your account and the associated profile, email <a href="mailto:rivertcgapp@gmail.com">rivertcgapp@gmail.com</a> and we'll process the request within 30 days.</p>
+    <p><strong>Deleting your account.</strong> Open <strong>Settings → Delete Account</strong> in the app. This immediately and permanently deletes your profile and every record we hold that belongs to you — collections, collection items, favorites and lists, selling groups and items including sales history, portfolio snapshots, the change record, and your synchronization state — along with your identity at our authentication provider. It cannot be undone, and we cannot recover it afterward. Deleting your account does not cancel your subscription: cancel that separately in your Apple ID subscription settings, or you will continue to be billed.</p>
+    <p>You can also email <a href="mailto:rivertcgapp@gmail.com">rivertcgapp@gmail.com</a> to request deletion, and we'll process it within 30 days.</p>
 
     <h2>Your rights</h2>
     <p>Depending on where you live, you may have rights under GDPR, CCPA, or other privacy laws, including:</p>
@@ -126,7 +161,7 @@
       <li>The right to opt out of any "sale" of personal information (we don't sell)</li>
       <li>The right to withdraw consent where processing is based on consent</li>
     </ul>
-    <p>To exercise any of these rights, email <a href="mailto:rivertcgapp@gmail.com">rivertcgapp@gmail.com</a>. We'll verify your identity and respond within statutory timeframes.</p>
+    <p>You can exercise deletion yourself at any time from Settings → Delete Account. For anything else — access, correction, or a copy of your collection data — email <a href="mailto:rivertcgapp@gmail.com">rivertcgapp@gmail.com</a>. We'll verify your identity and respond within statutory timeframes.</p>
 
     <h2>Children's privacy</h2>
     <p>River AI TCG is not intended for children under 13 (or under 16 in the EU and UK). We do not knowingly collect data from anyone under those ages. If you believe a child has provided us information, contact us and we'll delete it promptly.</p>
@@ -135,7 +170,7 @@
     <p>River AI TCG is operated from the United States. If you use the Service from outside the US, your information will be transferred to and processed in the US. By using River AI TCG you consent to that transfer.</p>
 
     <h2>Security</h2>
-    <p>All traffic between the app and our backend uses HTTPS/TLS. Authentication tokens are stored on-device using the OS keychain on iOS and encrypted secure storage on Android. We use industry-standard practices, but no system is 100% secure — keep the OAuth account you use to sign in protected with a strong password and two-factor authentication.</p>
+    <p>All traffic between the app and our backend uses HTTPS/TLS. Authentication tokens are stored on-device in the iOS keychain. Our database is not exposed to the public internet. Access to paid features and to your synchronized data is verified server-side on every request, not assumed from the app. We use industry-standard practices, but no system is 100% secure — keep the OAuth account you use to sign in protected with a strong password and two-factor authentication.</p>
 
     <h2>Changes to this policy</h2>
     <p>We may update this policy as the Service evolves. Material changes will be posted in-app and on this page with a new "Last updated" date. Continued use after the change means you accept the updated policy.</p>
