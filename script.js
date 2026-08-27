@@ -4,8 +4,9 @@
   const mix = (from, to, progress) => from + (to - from) * progress;
   const easeOutCubic = (value) => 1 - Math.pow(1 - clamp(value), 3);
 
+  let lenis = null;
   if (!reduced && typeof window.Lenis === 'function') {
-    const lenis = new Lenis({ lerp: 0.11 });
+    lenis = new Lenis({ lerp: 0.11 });
     const smooth = (time) => { lenis.raf(time); requestAnimationFrame(smooth); };
     requestAnimationFrame(smooth);
   }
@@ -64,6 +65,58 @@
   const wheel = document.querySelector('.card-stream');
   const cards = wheel ? [...wheel.querySelectorAll('.float-card')] : [];
   const tooltip = document.querySelector('.wheel-tooltip');
+  const heroCardPool = [
+    ['base1/4', 'Charizard'],
+    ['swsh6/201', 'Blaziken VMAX'],
+    ['swsh7/167', 'Leafeon V'],
+    ['swsh7/175', 'Glaceon V'],
+    ['swsh7/180', 'Espeon V'],
+    ['swsh7/184', 'Sylveon V'],
+    ['swsh7/189', 'Umbreon V'],
+    ['swsh7/194', 'Rayquaza V'],
+    ['swsh7/205', 'Leafeon VMAX'],
+    ['swsh7/209', 'Glaceon VMAX'],
+    ['swsh7/212', 'Sylveon VMAX'],
+    ['swsh7/215', 'Umbreon VMAX'],
+    ['swsh7/218', 'Rayquaza VMAX'],
+    ['swsh9/154', 'Charizard V'],
+    ['swsh10/167', 'Origin Forme Palkia V'],
+    ['swsh10/172', 'Machamp V'],
+    ['swsh11/177', 'Rotom V'],
+    ['swsh11/180', 'Aerodactyl V'],
+    ['swsh11/186', 'Giratina V'],
+    ['swsh12/177', 'Unown V'],
+    ['swsh12/186', 'Lugia V'],
+    ['sv2/203', 'Magikarp'],
+    ['sv3/223', 'Charizard ex'],
+    ['sv3pt5/199', 'Charizard ex'],
+    ['sv3pt5/202', 'Zapdos ex'],
+    ['sv3pt5/205', 'Mew ex'],
+    ['sv4pt5/232', 'Mew ex'],
+    ['sv4pt5/234', 'Charizard ex'],
+    ['sv6/214', 'Greninja ex'],
+    ['sv8/238', 'Pikachu ex'],
+    ['sv8/239', 'Latias ex'],
+    ['sv8pt5/144', 'Leafeon ex'],
+    ['sv8pt5/150', 'Glaceon ex'],
+    ['sv8pt5/155', 'Espeon ex'],
+    ['sv8pt5/156', 'Sylveon ex'],
+    ['sv8pt5/161', 'Umbreon ex'],
+  ];
+  const shuffledHeroCards = [...heroCardPool];
+  for (let index = shuffledHeroCards.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledHeroCards[index], shuffledHeroCards[swapIndex]] = [shuffledHeroCards[swapIndex], shuffledHeroCards[index]];
+  }
+  cards.forEach((card, index) => {
+    const [imageId, name] = shuffledHeroCards[index];
+    const image = card.querySelector('img');
+    card.dataset.label = name;
+    if (image) {
+      image.src = `https://images.pokemontcg.io/${imageId}.png`;
+      image.alt = name;
+    }
+  });
   let wheelAngle = Math.PI;
   let wheelSpeed = reduced ? 0 : 0.1;
   let scrollBoost = 0;
@@ -201,6 +254,45 @@
 
   const finalCta = document.querySelector('.final-cta');
   const fan = document.querySelector('[data-fan]');
+  const fanCards = fan ? [...fan.querySelectorAll('img')] : [];
+  fanCards.forEach((image, index) => {
+    const [imageId, name] = shuffledHeroCards[cards.length + index];
+    image.src = `https://images.pokemontcg.io/${imageId}.png`;
+    image.alt = name;
+  });
+  let downloadScrollTimer;
+  document.querySelectorAll('a[href="#download"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (!finalCta) return;
+      event.preventDefault();
+      const centerOffset = -Math.max(0, (innerHeight - finalCta.offsetHeight) / 2);
+      const targetTop = finalCta.getBoundingClientRect().top + scrollY + centerOffset;
+      if (lenis) lenis.scrollTo(finalCta, { offset: centerOffset, duration: 1.15 });
+      else scrollTo({ top: targetTop, behavior: reduced ? 'auto' : 'smooth' });
+      clearTimeout(downloadScrollTimer);
+      downloadScrollTimer = setTimeout(() => {
+        const bounds = finalCta.getBoundingClientRect();
+        const correction = bounds.top + bounds.height / 2 - innerHeight / 2;
+        if (Math.abs(correction) < 1) return;
+        if (lenis) lenis.scrollTo(scrollY + correction, { duration: .3 });
+        else scrollBy({ top: correction, behavior: reduced ? 'auto' : 'smooth' });
+      }, reduced ? 0 : 1250);
+    });
+  });
+  if (finalCta && location.hash === '#download') {
+    requestAnimationFrame(() => {
+      const centerOffset = -Math.max(0, (innerHeight - finalCta.offsetHeight) / 2);
+      if (lenis) lenis.scrollTo(finalCta, { offset: centerOffset, immediate: true });
+      else scrollTo({ top: finalCta.offsetTop + centerOffset, behavior: 'auto' });
+      requestAnimationFrame(() => {
+        const bounds = finalCta.getBoundingClientRect();
+        const correction = bounds.top + bounds.height / 2 - innerHeight / 2;
+        if (Math.abs(correction) < 1) return;
+        if (lenis) lenis.scrollTo(scrollY + correction, { immediate: true });
+        else scrollBy({ top: correction, behavior: 'auto' });
+      });
+    });
+  }
   if (fan && 'IntersectionObserver' in window) {
     new IntersectionObserver((entries, observer) => {
       if (entries[0]?.isIntersecting) { fan.classList.add('revealed'); observer.disconnect(); }
