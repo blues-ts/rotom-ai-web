@@ -1,283 +1,387 @@
-// River AI TCG — scroll-driven landing page behavior.
-// Everything degrades gracefully: no Lenis → native scroll; no IO → shown state.
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+  const mix = (from, to, progress) => from + (to - from) * progress;
+  const easeOutCubic = (value) => 1 - Math.pow(1 - clamp(value), 3);
 
-(function () {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ---- Lenis smooth scrolling (loaded from CDN; optional) ----
   if (!reduced && typeof window.Lenis === 'function') {
     const lenis = new Lenis({ lerp: 0.11 });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    const smooth = (time) => { lenis.raf(time); requestAnimationFrame(smooth); };
+    requestAnimationFrame(smooth);
   }
 
-  // ---- Nav gains a backdrop once the hero is scrolled ----
-  const nav = document.querySelector('.nav');
-  if (nav) {
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
+  const menuButton = document.querySelector('.menu-pill');
+  const menu = document.querySelector('.site-menu');
+  const menuShell = document.querySelector('.menu-shell');
+  let menuOpen = false;
+  let menuTimer;
 
-  // ---- Mouse-follow glow orb ----
-  const orb = document.querySelector('.orb');
-  if (orb && !reduced && window.matchMedia('(hover: hover)').matches) {
-    let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, active = false;
-    window.addEventListener('mousemove', (e) => {
-      tx = e.clientX;
-      ty = e.clientY;
-      if (!active) {
-        active = true;
-        x = tx; y = ty;
-        orb.classList.add('on');
-        requestAnimationFrame(follow);
-      }
-    }, { passive: true });
-    document.documentElement.addEventListener('mouseleave', () => orb.classList.remove('on'));
-    document.documentElement.addEventListener('mouseenter', () => { if (active) orb.classList.add('on'); });
-    function follow() {
-      x += (tx - x) * 0.08;
-      y += (ty - y) * 0.08;
-      orb.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-      requestAnimationFrame(follow);
-    }
-  }
+  function setMenu(nextOpen, returnFocus = false) {
+    if (!menuButton || !menu || !menuShell || nextOpen === menuOpen) return;
+    menuOpen = nextOpen;
+    clearTimeout(menuTimer);
 
-  // ---- Particle stream (hero, closing, footer) ----
-  // Motes drift left-to-right along a shared sine band rather than falling:
-  // three summed waves give the ribbon its organic shape, each mote fades in
-  // and out over its own lifetime, and drawing is additive so overlaps bloom.
-  const canvases = document.querySelectorAll('[data-particles]');
-  if (canvases.length) {
-    canvases.forEach((canvas) => {
-      const ctx = canvas.getContext('2d', { alpha: true });
-      if (!ctx) return;
+    menuButton.setAttribute('aria-expanded', String(nextOpen));
+    menuButton.setAttribute('aria-label', nextOpen ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', String(!nextOpen));
 
-      const host = canvas.parentElement;
-      const centerY = parseFloat(canvas.dataset.center) || 0.5;   // band position
-      const amp = parseFloat(canvas.dataset.amp) || 0.15;         // band height
-      const density = parseFloat(canvas.dataset.density) || 90;   // motes per 1000px
-      const fadeY = canvas.dataset.fade ? parseFloat(canvas.dataset.fade) : null;
-      const FADE_R = 0.09, FADE_CEIL = 0.22; // dim the band where text sits
-
-      let w = 0, h = 0, dots = [], rafId = null, last = 0;
-      let onScreen = false, pageVisible = !document.hidden;
-
-      function spawn(scattered) {
-        const life = 4 + Math.random() * 5;
-        // mostly accent blue, a few bright ice-white sparkles
-        const hue = Math.random() > 0.78 ? 0.55 + Math.random() * 0.45 : Math.random() * 0.45;
-        return {
-          x: Math.random() * (w + 80) - 40,
-          yOffset: (Math.random() - 0.5) * 90,
-          phase: Math.random() * Math.PI * 2,
-          speed: 14 + Math.random() * 32,      // px per second, rightward
-          size: 0.6 + Math.random() * 1.8,
-          life: life,
-          age: scattered ? Math.random() * life : 0,
-          twinkle: 1.6 + Math.random() * 3.2,
-          hue: hue,
-        };
-      }
-
-      // #3B9DF2 accent → #E1F0FF ice white as hue goes 0 → 1
-      function rgba(d, a) {
-        const r = Math.round(59 + 166 * d.hue);
-        const g = Math.round(157 + 83 * d.hue);
-        const b = Math.round(242 + 13 * d.hue);
-        return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-      }
-
-      // three summed sines — the band's shape at a given x and time
-      function band(x, t) {
-        return (0.55 * Math.sin(0.0042 * x + 0.18 * t) +
-                0.32 * Math.sin(0.011 * x + 0.42 * t + 1.7) +
-                0.13 * Math.sin(0.022 * x + 0.65 * t + 3.1)) * amp * h;
-      }
-
-      function size() {
-        const rect = host.getBoundingClientRect();
-        const dpr = Math.min(2, window.devicePixelRatio || 1);
-        w = Math.max(1, Math.floor(rect.width));
-        h = Math.max(1, Math.floor(rect.height));
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const target = Math.max(8, Math.floor((w / 1000) * density));
-        while (dots.length < target) dots.push(spawn(true));
-        while (dots.length > target) dots.pop();
-      }
-
-      function draw(now) {
-        const dt = Math.min(0.05, (now - (last || now)) / 1000);
-        last = now;
-        const t = now / 1000;
-        const mid = centerY * h;
-
-        ctx.clearRect(0, 0, w, h);
-        ctx.globalCompositeOperation = 'lighter';
-
-        for (let i = 0; i < dots.length; i++) {
-          const d = dots[i];
-          d.x += d.speed * dt;
-          d.age += dt;
-          if (d.x > w + 20 || d.age > d.life) { dots[i] = spawn(false); continue; }
-
-          const y = mid + band(d.x + 50 * d.phase, t) +
-                    d.yOffset * (0.4 + 0.6 * Math.sin(d.phase + 0.3 * t));
-
-          // fade in over life, twinkle, and never exceed half opacity
-          let a = Math.min(0.5, Math.max(0,
-            Math.sin(Math.PI * (d.age / d.life)) *
-            (0.55 + 0.45 * Math.sin(t * d.twinkle + 4 * d.phase)) * 0.5));
-
-          // keep the band quiet where headline text sits
-          if (fadeY !== null) {
-            const dist = Math.abs(y / h - fadeY) / FADE_R;
-            if (dist < 1) {
-              const ceil = FADE_CEIL + (1 - FADE_CEIL) * dist;
-              if (a > ceil) a = ceil;
-            }
-          }
-          if (a < 0.01) continue;
-
-          const halo = 6 * d.size;
-          const g = ctx.createRadialGradient(d.x, y, 0, d.x, y, halo);
-          g.addColorStop(0, rgba(d, a * 0.55));
-          g.addColorStop(1, rgba(d, 0));
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(d.x, y, halo, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = rgba(d, Math.min(1, a * 1.1));
-          ctx.beginPath();
-          ctx.arc(d.x, y, d.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.globalCompositeOperation = 'source-over';
-        rafId = requestAnimationFrame(draw);
-      }
-
-      function start() {
-        if (reduced || rafId !== null || !onScreen || !pageVisible) return;
-        last = 0;
-        rafId = requestAnimationFrame(draw);
-      }
-      function stop() {
-        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-      }
-
-      // reduced motion: one still frame of the band, no animation
-      function paintStill() {
-        ctx.clearRect(0, 0, w, h);
-        ctx.globalCompositeOperation = 'lighter';
-        const mid = centerY * h;
-        dots.forEach((d) => {
-          const y = mid + band(d.x, 0) + 0.5 * d.yOffset;
-          ctx.fillStyle = rgba(d, 0.5);
-          ctx.beginPath();
-          ctx.arc(d.x, y, d.size, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        ctx.globalCompositeOperation = 'source-over';
-      }
-
-      size();
-      if (reduced) {
-        paintStill();
-      } else if ('IntersectionObserver' in window) {
-        new IntersectionObserver((entries) => {
-          onScreen = !!(entries[0] && entries[0].isIntersecting);
-          if (onScreen) start(); else stop();
-        }, { threshold: 0 }).observe(canvas);
-      } else {
-        onScreen = true;
-        start();
-      }
-
-      document.addEventListener('visibilitychange', () => {
-        pageVisible = !document.hidden;
-        if (pageVisible) start(); else stop();
+    if (nextOpen) {
+      menuShell.classList.remove('closing');
+      menu.style.height = '0px';
+      menuShell.classList.add('open');
+      requestAnimationFrame(() => {
+        if (menuOpen) menu.style.height = `${menu.scrollHeight}px`;
       });
+      menuTimer = setTimeout(() => {
+        if (menuOpen) menu.style.height = 'auto';
+      }, 460);
+      return;
+    }
 
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => { size(); if (reduced) paintStill(); }, 150);
-      });
+    menu.style.height = `${menu.getBoundingClientRect().height}px`;
+    menuShell.classList.add('closing');
+    menu.offsetHeight;
+    menuShell.classList.remove('open');
+    requestAnimationFrame(() => { menu.style.height = '0px'; });
+    menuTimer = setTimeout(() => menuShell.classList.remove('closing'), 460);
+    if (returnFocus) menuButton.focus();
+  }
+
+  if (menuButton && menu && menuShell) {
+    menuButton.addEventListener('click', () => setMenu(!menuOpen));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    addEventListener('pointerdown', (event) => {
+      if (menuOpen && !menuShell.contains(event.target)) setMenu(false);
+    });
+    addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuOpen) setMenu(false, true);
     });
   }
 
-  // ---- Split display headlines into words for staggered reveal ----
-  const headlines = document.querySelectorAll('[data-words]');
-  headlines.forEach((h) => {
-    const words = h.textContent.trim().split(/\s+/);
-    h.textContent = '';
-    words.forEach((word, i) => {
-      const w = document.createElement('span');
-      w.className = 'w';
-      const wi = document.createElement('span');
-      wi.className = 'wi';
-      wi.textContent = word;
-      wi.style.transitionDelay = (i * 70) + 'ms';
-      w.appendChild(wi);
-      h.appendChild(w);
-      if (i < words.length - 1) h.appendChild(document.createTextNode(' '));
+  const hero = document.querySelector('.hero');
+  const heroCopy = document.querySelector('.hero-copy');
+  const navCta = document.querySelector('.nav-cta');
+  const wheel = document.querySelector('.card-stream');
+  const cards = wheel ? [...wheel.querySelectorAll('.float-card')] : [];
+  const tooltip = document.querySelector('.wheel-tooltip');
+  let wheelAngle = Math.PI;
+  let wheelSpeed = reduced ? 0 : 0.1;
+  let scrollBoost = 0;
+  let introSpinStarted = false;
+  let previousScroll = scrollY;
+  let hoveredCard = null;
+  let frameStart = null;
+  let previousFrame = null;
+  let wheelRadius = 320;
+
+  function sizeWheel() {
+    if (!wheel) return;
+    wheelRadius = Math.min(Math.max(wheel.offsetHeight * .32, 220), wheel.offsetWidth * .55, 410);
+  }
+  sizeWheel();
+
+  cards.forEach((card) => {
+    card.addEventListener('mouseenter', (event) => {
+      hoveredCard = card;
+      wheel.classList.add('has-hover');
+      card.classList.add('hovered');
+      if (tooltip) {
+        tooltip.querySelector('b').textContent = card.dataset.label || '';
+        tooltip.classList.add('show');
+        tooltip.style.transform = `translate3d(${event.clientX + 16}px,${event.clientY + 18}px,0)`;
+      }
+    });
+    card.addEventListener('mousemove', (event) => {
+      if (tooltip) tooltip.style.transform = `translate3d(${event.clientX + 16}px,${event.clientY + 18}px,0)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      hoveredCard = null;
+      wheel.classList.remove('has-hover');
+      card.classList.remove('hovered');
+      tooltip?.classList.remove('show');
     });
   });
 
-  const hasIO = 'IntersectionObserver' in window;
+  function animateWheel(time) {
+    if (frameStart === null) frameStart = time;
+    const delta = Math.min(64, time - (previousFrame || time)) / 1000;
+    previousFrame = time;
+    const elapsed = reduced ? Infinity : (time - frameStart - 800) / 1000;
+    if (!introSpinStarted && elapsed >= 0) { scrollBoost = 3; introSpinStarted = true; }
+    const scrollDelta = Math.abs(scrollY - previousScroll);
+    previousScroll = scrollY;
+    scrollBoost = Math.min(5, scrollBoost + scrollDelta * .004) * Math.exp(-delta * 1.6);
+    const targetSpeed = hoveredCard ? 0 : .1;
+    wheelSpeed += (targetSpeed - wheelSpeed) * (1 - Math.exp(-delta * 3.2));
+    wheelAngle -= (wheelSpeed + (hoveredCard ? 0 : scrollBoost)) * delta;
+    const ringGrow = elapsed === Infinity ? 1 : .45 + .55 * easeOutCubic(elapsed / 1.9);
+    const step = Math.PI * 2 / Math.max(cards.length, 1);
+    cards.forEach((card, index) => {
+      const progress = elapsed === Infinity ? 1 : easeOutCubic((elapsed - index * .08) / .85);
+      if (progress <= 0) { card.style.visibility = 'hidden'; return; }
+      const angle = wheelAngle + index * step;
+      const radius = wheelRadius * ringGrow;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+      const tiltX = Math.sin(angle) * 4;
+      const tiltY = Math.cos(angle) * 10;
+      const fan = Math.atan2(Math.sin(angle - Math.PI), Math.cos(angle - Math.PI)) * 180 / Math.PI * .14;
+      card.style.visibility = 'visible';
+      card.style.opacity = progress.toFixed(3);
+      card.style.transform = `translate(50%,-50%) translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) perspective(1100px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(${fan.toFixed(2)}deg) scale(${(.7 + .3 * progress).toFixed(3)})`;
+      card.style.zIndex = hoveredCard === card ? '100' : String(Math.round((1 - Math.cos(angle)) * 40));
+    });
+    requestAnimationFrame(animateWheel);
+  }
+  if (cards.length) requestAnimationFrame(animateWheel);
 
-  // ---- Reveal on scroll: word headlines + fade-up blocks ----
-  const revealables = [...document.querySelectorAll('[data-words]'), ...document.querySelectorAll('.reveal')];
-  if (!hasIO || reduced) {
-    revealables.forEach((el) => el.classList.add('shown', 'visible'));
-  } else {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add(e.target.hasAttribute('data-words') ? 'shown' : 'visible');
-        io.unobserve(e.target);
+  const demoSection = document.querySelector('.catalog-demo');
+  const demoCard = document.querySelector('.catalog-card');
+  const demoWindow = document.querySelector('.app-demo-window');
+  const demoLabel = document.querySelector('.demo-label');
+  const demoScreens = [...document.querySelectorAll('[data-demo-screen]')];
+  const demoCopies = [...document.querySelectorAll('[data-demo-copy]')];
+  const demoSteps = [...document.querySelectorAll('[data-demo-step]')];
+  let activeDemo = 0;
+
+  function setDemoStep(nextStep) {
+    const next = Math.min(Math.max(Number(nextStep) || 0, 0), Math.max(demoScreens.length - 1, 0));
+    activeDemo = next;
+    demoScreens.forEach((screen, index) => {
+      const selected = index === next;
+      screen.classList.toggle('active', selected);
+      screen.setAttribute('aria-hidden', String(!selected));
+    });
+    demoCopies.forEach((copy, index) => {
+      const selected = index === next;
+      copy.classList.toggle('active', selected);
+      copy.setAttribute('aria-hidden', String(!selected));
+    });
+    demoSteps.forEach((step, index) => {
+      const selected = index === next;
+      step.classList.toggle('active', selected);
+      step.setAttribute('aria-selected', String(selected));
+      step.tabIndex = selected ? 0 : -1;
+    });
+    demoWindow?.style.setProperty('--demo-step', String(next));
+  }
+
+  demoSteps.forEach((step, index) => {
+    step.addEventListener('click', () => setDemoStep(index));
+    step.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const next = (index + direction + demoSteps.length) % demoSteps.length;
+      setDemoStep(next);
+      demoSteps[next]?.focus();
+    });
+  });
+  if (demoScreens.length) setDemoStep(0);
+  const manifesto = document.querySelector('[data-manifesto]');
+  if (manifesto) {
+    const words = manifesto.textContent.trim().split(/\s+/);
+    manifesto.textContent = '';
+    words.forEach((word, index) => {
+      const span = document.createElement('span');
+      span.textContent = word + (index < words.length - 1 ? ' ' : '');
+      if (index >= words.length - 4) span.classList.add('highlight');
+      manifesto.appendChild(span);
+    });
+  }
+
+  const story = document.querySelector('.experience');
+  const copies = [...document.querySelectorAll('.experience-copy article')];
+  const bars = [...document.querySelectorAll('.progress i')];
+  const shot = document.querySelector('#story-shot');
+  const phone = document.querySelector('.phone');
+  const shots = ['screens/binder-scan.webp', 'screens/configure-raw.webp', 'screens/vending.webp', 'screens/collections.webp'];
+  const shotAlts = ['River binder scanner', 'River raw card pricing configuration', 'River vending dashboard', 'River collections dashboard'];
+  let active = 0;
+
+  const finalCta = document.querySelector('.final-cta');
+  const fan = document.querySelector('[data-fan]');
+  if (fan && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries, observer) => {
+      if (entries[0]?.isIntersecting) { fan.classList.add('revealed'); observer.disconnect(); }
+    }, { rootMargin: '-80px' }).observe(fan);
+  } else fan?.classList.add('revealed');
+
+  function updateScrollAnimations() {
+    const viewportHeight = innerHeight;
+    if (hero && heroCopy) {
+      const heroOpacity = 1 - clamp(scrollY / (hero.offsetHeight * .5));
+      heroCopy.style.opacity = String(heroOpacity);
+      if (wheel && scrollY > 0) wheel.style.opacity = String(heroOpacity);
+      if (navCta) {
+        const showNavCta = scrollY > hero.offsetHeight * .5;
+        navCta.classList.toggle('show', showNavCta);
+        navCta.setAttribute('aria-hidden', String(!showNavCta));
+        navCta.tabIndex = showNavCta ? 0 : -1;
+      }
+    }
+
+    if (demoSection && demoCard && demoWindow) {
+      const start = demoSection.offsetTop;
+      const distance = Math.max(1, demoSection.offsetHeight - viewportHeight);
+      const progress = clamp((scrollY - start) / distance);
+      const mobile = innerWidth < 768;
+      const padding = innerWidth >= 1024 ? 40 : innerWidth >= 640 ? 32 : 20;
+      const fullWidth = Math.min(innerWidth, 1440) - padding * 2;
+      const stageWidth = mobile ? 456 : 1120;
+      const stageHeight = mobile ? 780 : 700;
+      const fullHeight = Math.min(viewportHeight - 120, Math.round(fullWidth * stageHeight / stageWidth));
+      const top = Math.max(mobile ? 96 : 64, Math.round((viewportHeight - fullHeight) / 2));
+      const peekWidth = mobile ? fullWidth : Math.min(400, fullWidth);
+      const peekHeight = Math.min(260, fullHeight);
+      const peekY = viewportHeight - 50 - top;
+      const growth = easeOutCubic(progress / .18);
+      const width = mobile ? fullWidth : mix(peekWidth, fullWidth, growth);
+      const height = mobile ? fullHeight : mix(peekHeight, fullHeight, growth);
+      const y = mix(peekY, 0, growth);
+      const scale = Math.min(width / stageWidth, height / stageHeight, 1.1);
+      const demoProgress = clamp((progress - .22) / .72);
+      const hintIn = clamp((progress - .18) / .04);
+      const hintOut = 1 - clamp((progress - .94) / .03);
+      demoCard.style.setProperty('--card-top', `${top}px`);
+      demoCard.style.setProperty('--card-width', `${width}px`);
+      demoCard.style.setProperty('--card-height', `${height}px`);
+      demoCard.style.setProperty('--card-y', `${y}px`);
+      demoCard.style.setProperty('--demo-scale', String(scale));
+      demoCard.style.setProperty('--hint-opacity', String(hintIn * hintOut));
+      demoCard.style.setProperty('--progress-opacity', String(hintIn));
+      demoCard.style.setProperty('--progress-angle', `${demoProgress * 360}deg`);
+      const nextDemo = Math.floor(clamp(demoProgress, 0, .999) * Math.max(demoScreens.length, 1));
+      if (nextDemo !== activeDemo) setDemoStep(nextDemo);
+      if (demoLabel) {
+        demoLabel.style.setProperty('--caption-y', `${top + y - 44}px`);
+        demoLabel.style.setProperty('--caption-opacity', String(1 - clamp(progress / .1)));
+      }
+    }
+
+    if (manifesto) {
+      const rect = manifesto.getBoundingClientRect();
+      const progress = clamp((viewportHeight * .85 - rect.top) / (viewportHeight * .55));
+      const words = [...manifesto.children];
+      words.forEach((word, index) => {
+        const local = clamp(progress * words.length - index);
+        word.style.opacity = String(mix(.12, 1, local));
       });
-    }, { threshold: 0.25, rootMargin: '0px 0px -60px 0px' });
-    revealables.forEach((el) => io.observe(el));
-  }
-
-  // ---- Scan story: scroll progress drives the active step ----
-  // Step 0 shows the real scanner screenshot; steps 1+ crossfade to the
-  // card-detail screenshot; the final step adds the "Added" toast.
-  const scanScroll = document.querySelector('.scan-scroll');
-  const scanPhone = document.querySelector('.scan-phone');
-  if (scanScroll && scanPhone) {
-    const stepItems = scanScroll.querySelectorAll('.step-item');
-    const counter = scanScroll.querySelector('.step-counter .cur');
-    const ovAdded = scanScroll.querySelector('.ov-added');
-    const STEPS = stepItems.length;
-    let current = -1;
-
-    function setStep(idx) {
-      if (idx === current) return;
-      current = idx;
-      scanPhone.dataset.step = idx;
-      stepItems.forEach((s, i) => s.classList.toggle('on', i === idx));
-      if (counter) counter.textContent = '0' + (idx + 1);
-      ovAdded && ovAdded.classList.toggle('show', idx === STEPS - 1);
     }
 
-    function onScanScroll() {
-      const rect = scanScroll.getBoundingClientRect();
-      const total = scanScroll.offsetHeight - window.innerHeight;
-      const progress = Math.min(1, Math.max(0, -rect.top / total));
-      setStep(Math.min(STEPS - 1, Math.floor(progress * STEPS)));
+    if (story && copies.length) {
+      const rect = story.getBoundingClientRect();
+      const entry = clamp((viewportHeight - rect.top) / viewportHeight);
+      const exit = clamp((viewportHeight - rect.bottom) / viewportHeight);
+      story.style.setProperty('--panel-scale', String(.75 + .25 * entry - .25 * exit));
+      story.style.setProperty('--panel-radius', `${56 * (1 - entry) + 56 * exit}px`);
+      story.style.setProperty('--panel-origin', exit > 0 ? 'center bottom' : 'center top');
+      document.documentElement.classList.toggle('scrollbar-on-dark', entry > .999 && exit < .001);
+      const distance = Math.max(1, story.offsetHeight - viewportHeight);
+      const progress = clamp((scrollY - story.offsetTop) / distance, 0, .999);
+      const next = Math.floor(progress * copies.length);
+      if (next !== active) {
+        active = next;
+        copies.forEach((item, i) => item.classList.toggle('active', i === active));
+        bars.forEach((item, i) => item.classList.toggle('on', i === active));
+        if (shot && phone) {
+          phone.style.opacity = '.55'; phone.style.transform = 'translateY(28px) scale(.93)';
+          setTimeout(() => { shot.src = shots[active]; shot.alt = shotAlts[active]; phone.style.opacity = '1'; phone.style.transform = 'none'; }, 180);
+        }
+      }
     }
-    setStep(0);
-    onScanScroll();
-    window.addEventListener('scroll', onScanScroll, { passive: true });
-    window.addEventListener('resize', onScanScroll);
+
+    if (finalCta) {
+      const rect = finalCta.getBoundingClientRect();
+      const endTop = (viewportHeight - rect.height) / 2;
+      const progress = clamp((viewportHeight - rect.top) / Math.max(1, viewportHeight - endTop));
+      finalCta.style.transform = `translateY(${40 * (1 - progress)}px) scale(${.93 + .07 * progress})`;
+    }
   }
+
+  const benefits = document.querySelector('.benefits');
+  const preview = document.querySelector('.benefit-preview');
+  const previewImage = preview?.querySelector('img');
+  if (benefits && preview && !reduced) {
+    let targetX = 0, targetY = 0, x = 0, y = 0, velocity = 0, previewRunning = false;
+    const follow = () => {
+      const oldX = x; x += (targetX - x) * .18; y += (targetY - y) * .18; velocity += ((x - oldX) - velocity) * .2;
+      preview.style.left = `${x}px`; preview.style.top = `${y}px`; preview.style.setProperty('--preview-rotate', `${clamp(velocity * .45, -8, 8)}deg`);
+      if (previewRunning) requestAnimationFrame(follow);
+    };
+    benefits.addEventListener('mousemove', (event) => { const rect = benefits.getBoundingClientRect(); targetX = event.clientX - rect.left + 35; targetY = event.clientY - rect.top - 80; });
+    benefits.querySelectorAll('.benefit-row').forEach((row) => {
+      row.addEventListener('mouseenter', (event) => {
+        const rect = benefits.getBoundingClientRect(); x = targetX = event.clientX - rect.left + 35; y = targetY = event.clientY - rect.top - 80;
+        if (previewImage) previewImage.src = row.dataset.preview;
+        preview.classList.add('show'); if (!previewRunning) { previewRunning = true; requestAnimationFrame(follow); }
+      });
+      row.addEventListener('mouseleave', () => { preview.classList.remove('show'); previewRunning = false; });
+    });
+  }
+
+  if (!reduced) {
+    const magneticLinks = [...document.querySelectorAll('.pill')].map((element) => ({
+      element, x: 0, y: 0, velocityX: 0, velocityY: 0, targetX: 0, targetY: 0
+    }));
+    let magneticFrame = 0;
+    let previousMagneticTime = 0;
+
+    const animateMagneticLinks = (time) => {
+      const delta = Math.min((time - (previousMagneticTime || time)) / 1000, .032);
+      previousMagneticTime = time;
+      let moving = false;
+
+      magneticLinks.forEach((state) => {
+        const accelerationX = (state.targetX - state.x) * 220 - state.velocityX * 17;
+        const accelerationY = (state.targetY - state.y) * 220 - state.velocityY * 17;
+        state.velocityX += accelerationX * delta;
+        state.velocityY += accelerationY * delta;
+        state.x += state.velocityX * delta;
+        state.y += state.velocityY * delta;
+
+        if (Math.abs(state.targetX - state.x) < .01 && Math.abs(state.velocityX) < .01) {
+          state.x = state.targetX; state.velocityX = 0;
+        }
+        if (Math.abs(state.targetY - state.y) < .01 && Math.abs(state.velocityY) < .01) {
+          state.y = state.targetY; state.velocityY = 0;
+        }
+
+        state.element.style.setProperty('--mag-x', `${state.x.toFixed(3)}px`);
+        state.element.style.setProperty('--mag-y', `${state.y.toFixed(3)}px`);
+        if (state.x !== state.targetX || state.y !== state.targetY || state.velocityX || state.velocityY) moving = true;
+      });
+
+      if (moving) magneticFrame = requestAnimationFrame(animateMagneticLinks);
+      else { magneticFrame = 0; previousMagneticTime = 0; }
+    };
+
+    const startMagneticAnimation = () => {
+      if (!magneticFrame) magneticFrame = requestAnimationFrame(animateMagneticLinks);
+    };
+
+    magneticLinks.forEach((state) => {
+      state.element.addEventListener('pointermove', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        const rect = state.element.getBoundingClientRect();
+        state.targetX = (event.clientX - rect.left - rect.width / 2) * .35;
+        state.targetY = (event.clientY - rect.top - rect.height / 2) * .45;
+        startMagneticAnimation();
+      });
+      state.element.addEventListener('pointerleave', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        state.targetX = 0;
+        state.targetY = 0;
+        startMagneticAnimation();
+      });
+    });
+  }
+
+  document.querySelectorAll('details').forEach((detail) => detail.addEventListener('toggle', () => {
+    const mark = detail.querySelector('summary span'); if (mark) mark.textContent = detail.open ? '×' : '＋';
+  }));
+
+  addEventListener('scroll', updateScrollAnimations, { passive: true });
+  addEventListener('resize', () => { sizeWheel(); updateScrollAnimations(); });
+  updateScrollAnimations();
 })();

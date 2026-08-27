@@ -3,377 +3,168 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>River AI TCG — scan any trading card and see what it's worth</title>
-  <meta name="description" content="River AI TCG is a mobile app for trading card collectors. Scan a card with your phone's camera to identify it, see live market prices for raw and graded copies, track the value of your collection, and ask River, the built-in AI assistant, about any card." />
-  <meta name="theme-color" content="#133A5E" />
+  <title>River AI TCG — Know what every card is worth</title>
+  <meta name="description" content="Scan any trading card, see live raw and graded prices, and track your entire collection with River AI TCG." />
+  <meta name="theme-color" content="#eaf6ff" />
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=20260806" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&family=Google+Sans+Code:wght@400..600&display=swap" />
+  <link rel="stylesheet" href="styles.css?v=20260826g" />
 </head>
 <body>
-
-<!-- mouse-follow glow — moved by script.js -->
-<div class="orb" aria-hidden="true"></div>
-
-<!-- ambient glows — one document-spanning layer, so section
-     boundaries never clip a glow (no hard cuts) -->
-<div class="ambient" aria-hidden="true"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="g4"></i></div>
-
-<!-- ============ NAV ============ -->
-<header class="nav" role="banner">
-  <div class="container nav-inner">
-    <a href="index.html" class="brand" aria-label="River AI TCG home">
-      <img class="brand-mark" src="river-logo.png" alt="" aria-hidden="true" />
-      <span>River AI TCG</span>
-    </a>
-    <div class="nav-actions">
-      <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-      <a class="download-btn compact" href="#" aria-label="Download River AI TCG on the App Store">
-        <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
-        <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
-      </a>
-    </div>
-  </div>
-</header>
-
-<!-- ============ HERO ============ -->
-<section class="hero" aria-labelledby="hero-title">
-  <canvas class="particles" data-particles data-center="0.68" data-amp="0.15" data-density="100" data-fade="0.42" aria-hidden="true"></canvas>
-  <div class="container">
-    <span class="hero-eyebrow"><span class="dot"></span> Live market data · Built for iPhone</span>
-    <h1 id="hero-title" class="display hero-title" data-words>Know what every card is worth.</h1>
-    <p class="hero-sub"><strong>River AI TCG is a mobile app for trading card collectors.</strong> Scan a card with your camera to identify it, see what it's worth right now — raw or graded, from PSA to SGC — and track your whole collection against the live market.</p>
-    <div class="hero-ctas">
-      <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-      <a class="download-btn" href="#" aria-label="Download River AI TCG on the App Store">
-        <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
-        <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
-      </a>
-      <span class="hero-note">Free to try · 50,000+ cards tracked</span>
-    </div>
-  </div>
-  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
-</section>
-
-<!-- ============ ABOUT — plain-language statement of purpose ============
-     Kept literal and free of scroll animation on purpose: this is the
-     section app-review teams (Apple, Google OAuth brand verification)
-     read to understand what the app actually does. -->
-<section class="sect about-sect" id="about" aria-labelledby="about-title">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-head">
-        <span class="eyebrow">About the app</span>
-        <h2 id="about-title" class="display about-title">What River AI TCG does.</h2>
-        <div class="about-chips">
-          <span class="chip">Scan</span>
-          <span class="chip">Live prices</span>
-          <span class="chip">Graded comps</span>
-          <span class="chip">Collection value</span>
-          <span class="chip">AI answers</span>
-        </div>
+  <header class="floating-nav">
+    <a class="nav-logo" href="#top" aria-label="River AI TCG home"><img src="river-logo.png" alt="" /></a>
+    <div class="menu-shell">
+      <i class="menu-surface" aria-hidden="true"></i>
+      <div class="menu-trigger-frame">
+        <button class="menu-pill" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+          <span class="morph-label" aria-hidden="true"><span>Menu</span><span>Close</span></span>
+        </button>
       </div>
-      <div class="about-copy">
-        <p class="about-lede">River AI TCG is a mobile app for people who collect, trade, and sell trading cards. Point your phone's camera at a card and the app identifies the exact card, set, and variant, then shows what it is currently selling for — as a raw card or graded by PSA, BGS, CGC, ACE, TAG, AGS, or SGC — using prices gathered continuously from card marketplaces.</p>
-        <p>Save cards to a collection and the app values your whole binder in real time, with price history from the last 7 days out to all time. You can scan a stack of cards in one session, look up sealed products like booster boxes and elite trainer boxes, browse every set in English and Japanese, and organize inventory for selling at a show. River, the built-in AI assistant, answers questions about any card in plain language and shows the market data and recent sales it based its answer on.</p>
-        <p class="about-who"><strong>Who it's for:</strong> collectors valuing what they own, traders checking a deal at the table, and vendors pricing inventory before a show. Free to try — sign in with Apple or Google to search every card, set, and sealed product. River AI TCG Pro unlocks live prices, the AI assistant, and collections synced across your devices.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SCAN — sticky scroll story ============ -->
-<div class="scan-scroll" id="features">
-  <section class="scan-sticky" aria-labelledby="scan-title">
-    <div class="container scan-grid">
-      <div class="scan-copy">
-        <span class="eyebrow">Scan</span>
-        <h2 id="scan-title" class="display" data-words>Point it. Match it. Price it.</h2>
-        <div class="step-counter tnum"><span class="cur">01</span> / 05</div>
-        <div class="step-list">
-          <div class="step-item on" data-step="0">
-            <h3>Point your camera.</h3>
-            <p>No typing, no set symbols to decode. Vision AI reads the card straight through the sleeve.</p>
+      <nav id="site-menu" class="site-menu" aria-label="Main navigation" aria-hidden="true">
+        <div class="menu-content">
+          <div class="menu-primary">
+            <span class="menu-kicker menu-anim" style="--i:0">Menu</span>
+            <a class="menu-anim" href="#overview" style="--i:1">Overview</a><a class="menu-anim" href="#how" style="--i:2">How it works</a><a class="menu-anim" href="#plans" style="--i:3">Plans</a><a class="menu-anim" href="#faq" style="--i:4">FAQ</a>
           </div>
-          <div class="step-item" data-step="1">
-            <h3>River finds the exact print.</h3>
-            <p>Set, number, variant — matched with 99.2% confidence against 50,000+ cards.</p>
-          </div>
-          <div class="step-item" data-step="2">
-            <h3>Every price appears.</h3>
-            <p>Raw through PSA 10, pulled live from three marketplaces at once.</p>
-          </div>
-          <div class="step-item" data-step="3">
-            <h3>Raw or graded — your call.</h3>
-            <p>Switch condition, or price it as a PSA, BGS, CGC or SGC slab — the value moves the moment you tap.</p>
-          </div>
-          <div class="step-item" data-step="4">
-            <h3>One tap to your collection.</h3>
-            <p>From then on it's valued in real time — exact variant, condition, and grade.</p>
+          <hr class="menu-anim" style="--i:5" />
+          <div class="menu-contact">
+            <span class="menu-kicker menu-anim" style="--i:6">Get in touch</span>
+            <div class="menu-secondary"><a class="menu-anim" href="mailto:rivertcgapp@gmail.com" style="--i:7">Contact</a><a class="menu-anim" href="privacy.html" style="--i:8">Privacy</a><a class="menu-anim" href="terms.html" style="--i:9">Terms</a></div>
           </div>
         </div>
-      </div>
+      </nav>
+    </div>
+    <a class="nav-cta" href="#download">Download</a>
+  </header>
 
-      <div class="scan-stage" aria-hidden="true">
-        <div class="phone-glow"></div>
-        <div class="phone scan-phone" data-step="0">
-          <div class="phone-screen">
-            <img class="shot" src="screens/scanner.webp" alt="" />
-            <img class="shot shot-b" src="screens/card-detail.webp" alt="" />
-            <!-- configure sheet — the raw shot holds, then the graded one
-                 crossfades in so the market value visibly jumps -->
-            <img class="shot shot-c" src="screens/configure-raw.webp" alt="" />
-            <img class="shot shot-d" src="screens/configure-graded.webp" alt="" />
-          <!-- scan tray — the captured card lands under the reticle with its
-               ballpark price, taking the alignment caption's slot (ScanTray.tsx) -->
-          <div class="ov-tray">
-            <div class="tray-item">
-              <img src="https://images.pokemontcg.io/swsh12/186.png" alt="" loading="lazy" />
-              <span class="tray-x">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-              </span>
-              <span class="tray-price">$533.08</span>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="hero-badge">Built for collectors on iPhone</p>
+        <h1>Know every card<br /><span>in your collection</span></h1>
+        <p>Scan and identify trading cards instantly. See raw and graded market prices, then track everything you own from one place.</p>
+        <div class="actions"><a class="pill black" href="#download">Download</a><a class="pill outline" href="#how">See how it works</a></div>
+      </div>
+      <div class="card-stream" aria-hidden="true">
+        <div class="float-card" data-label="Umbreon VMAX · $1,210"><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" /></div>
+        <div class="float-card" data-label="Lugia V · $538"><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" /></div>
+        <div class="float-card" data-label="Charizard · $412"><img src="https://images.pokemontcg.io/base1/4.png" alt="" /></div>
+        <div class="float-card" data-label="Giratina V · $310"><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" /></div>
+        <div class="float-card" data-label="Rayquaza VMAX · $645"><img src="https://images.pokemontcg.io/swsh7/218.png" alt="" /></div>
+        <div class="float-card" data-label="Mew ex · $38"><img src="https://images.pokemontcg.io/sv3pt5/151.png" alt="" /></div>
+        <div class="float-card" data-label="Umbreon VMAX · PSA 10"><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" /></div>
+        <div class="float-card" data-label="Lugia V · PSA 10"><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" /></div>
+        <div class="float-card" data-label="Charizard · Base Set"><img src="https://images.pokemontcg.io/base1/4.png" alt="" /></div>
+        <div class="float-card" data-label="Giratina V · Alt Art"><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" /></div>
+      </div>
+      <div class="wheel-tooltip" aria-hidden="true"><b></b><span>Live market price</span></div>
+    </section>
+
+    <section class="catalog-demo" id="overview" aria-label="Product demo">
+      <div class="catalog-sticky">
+        <p class="demo-label">▶ A real River session, from collection to exact price</p>
+        <div class="catalog-card">
+          <div class="app-demo-window">
+            <div class="app-demo-copy">
+              <p class="app-demo-eyebrow"><i></i> Interactive app demo</p>
+              <div class="app-demo-copy-stack" aria-live="polite">
+                <article class="active" data-demo-copy="0"><span>01 / 05</span><h2>Your collection at a glance</h2><p>See portfolio value, market movement, and every binder directly in River.</p></article>
+                <article data-demo-copy="1"><span>02 / 05</span><h2>Scan the card in front of you</h2><p>River recognizes the exact print on-device—no searching or photo uploads.</p></article>
+                <article data-demo-copy="2"><span>03 / 05</span><h2>Land on the exact match</h2><p>Open the correct set, number, variant, and current market value instantly.</p></article>
+                <article data-demo-copy="3"><span>04 / 05</span><h2>Price it your way</h2><p>Switch from raw condition to PSA, BGS, CGC, ACE, TAG, AGS, or SGC grades.</p></article>
+                <article data-demo-copy="4"><span>05 / 05</span><h2>Ask River anything</h2><p>Live pricing, sold comps, portfolio answers, grading scenarios, and confirmable app actions—all in one conversation.</p><ul class="ai-demo-capabilities"><li>400+ EN + JP expansions</li><li>Market + sold data</li><li>Portfolio aware</li><li>Reviewable actions</li></ul></article>
+              </div>
+              <div class="app-demo-steps" role="tablist" aria-label="River app demo steps">
+                <button class="active" type="button" role="tab" aria-selected="true" data-demo-step="0"><i>01</i><span>Collection</span></button>
+                <button type="button" role="tab" aria-selected="false" data-demo-step="1"><i>02</i><span>Scan</span></button>
+                <button type="button" role="tab" aria-selected="false" data-demo-step="2"><i>03</i><span>Match</span></button>
+                <button type="button" role="tab" aria-selected="false" data-demo-step="3"><i>04</i><span>Pricing</span></button>
+                <button type="button" role="tab" aria-selected="false" data-demo-step="4"><i>05</i><span>River AI</span></button>
+              </div>
+              <p class="app-demo-hint"><i></i> Keep scrolling or tap a step</p>
+            </div>
+            <div class="app-device-stage">
+              <div class="app-device-glow" aria-hidden="true"></div>
+              <div class="app-phone-shell">
+                <i class="app-phone-button" aria-hidden="true"></i>
+                <div class="app-screen-stack">
+                  <figure class="active" data-demo-screen="0"><img src="screens/collections.webp" alt="River collections screen showing portfolio value and binders" /></figure>
+                  <figure data-demo-screen="1"><img src="screens/scanner.webp" alt="River scanner recognizing a Lugia card" /></figure>
+                  <figure data-demo-screen="2"><img src="screens/card-detail.webp" alt="River Lugia card detail with current market value" /></figure>
+                  <figure data-demo-screen="3"><img src="screens/configure-graded.webp" alt="River graded pricing configuration for a Lugia card" /></figure>
+                  <figure data-demo-screen="4"><img src="screens/chat.webp" alt="River AI chat providing market analysis for an Umbreon card" /></figure>
+                </div>
+              </div>
+              <span class="app-demo-status"><i></i><b>River</b> · real app screens</span>
             </div>
           </div>
-          <div class="ov ov-added">
-            <div class="ov-toast">
-              <span class="tick">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <span>
-                <span class="ov-title">Added to My Collection</span>
-                <span class="ov-sub">Valued live from now on</span>
-              </span>
-            </div>
-          </div>
-          </div>
+          <span class="scroll-chip">SCROLL DOWN　↓</span>
+          <i class="catalog-progress" aria-hidden="true"></i>
         </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
 
-<!-- ============ THE TAPE ============ -->
-<section class="tape-sect" aria-labelledby="tape-title">
-  <div class="container sect-head center">
-    <span class="eyebrow">The tape</span>
-    <h2 id="tape-title" class="display" data-words>The market moves all day. So does River.</h2>
-    <p class="lede">Live prices from three marketplaces, refreshed continuously — every card, every variant, every grade.</p>
-  </div>
+    <section class="manifesto"><h2 data-manifesto>River is the future of card collecting. Every card identified, priced, and organized from the phone in your hand.</h2></section>
 
-  <div class="tape" aria-hidden="true">
-    <div class="tape-row">
-      <div class="tape-track">
-        <!-- set A -->
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" loading="lazy" /><span class="n">Umbreon VMAX</span><span class="v tnum">$1,210.00</span><span class="c up">+4.1%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" loading="lazy" /><span class="n">Lugia V</span><span class="v tnum">$538.08</span><span class="c up">+3.4%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/base1/4.png" alt="" loading="lazy" /><span class="n">Charizard</span><span class="v tnum">$412.50</span><span class="c up">+1.2%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/sv3pt5/151.png" alt="" loading="lazy" /><span class="n">Mew ex</span><span class="v tnum">$38.20</span><span class="c up">+2.2%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" loading="lazy" /><span class="n">Giratina V</span><span class="v tnum">$310.00</span><span class="c up">+5.0%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh7/218.png" alt="" loading="lazy" /><span class="n">Rayquaza VMAX</span><span class="v tnum">$645.00</span><span class="c up">+3.8%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/base1/58.png" alt="" loading="lazy" /><span class="n">Pikachu</span><span class="v tnum">$8.40</span><span class="c down">−0.6%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/sv3pt5/6.png" alt="" loading="lazy" /><span class="n">Charizard ex</span><span class="v tnum">$92.00</span><span class="c down">−1.4%</span></span>
-        <!-- set A duplicated for a seamless loop -->
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" loading="lazy" /><span class="n">Umbreon VMAX</span><span class="v tnum">$1,210.00</span><span class="c up">+4.1%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" loading="lazy" /><span class="n">Lugia V</span><span class="v tnum">$538.08</span><span class="c up">+3.4%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/base1/4.png" alt="" loading="lazy" /><span class="n">Charizard</span><span class="v tnum">$412.50</span><span class="c up">+1.2%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/sv3pt5/151.png" alt="" loading="lazy" /><span class="n">Mew ex</span><span class="v tnum">$38.20</span><span class="c up">+2.2%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" loading="lazy" /><span class="n">Giratina V</span><span class="v tnum">$310.00</span><span class="c up">+5.0%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/swsh7/218.png" alt="" loading="lazy" /><span class="n">Rayquaza VMAX</span><span class="v tnum">$645.00</span><span class="c up">+3.8%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/base1/58.png" alt="" loading="lazy" /><span class="n">Pikachu</span><span class="v tnum">$8.40</span><span class="c down">−0.6%</span></span>
-        <span class="tape-item"><img src="https://images.pokemontcg.io/sv3pt5/6.png" alt="" loading="lazy" /><span class="n">Charizard ex</span><span class="v tnum">$92.00</span><span class="c down">−1.4%</span></span>
-      </div>
-    </div>
+    <section class="benefits">
+      <div class="benefit-intro"><h2>Never guess at a<br />card’s value again</h2><p>River identifies the exact print and brings the market to you. No searching through sets, juggling tabs, or relying on stale comps.</p></div>
+      <div class="benefit-row" data-preview="screens/scanner.webp"><span>01</span><h3>Cards identify instantly</h3><p>Point your camera at a card—even through a sleeve—and River finds the exact set, number, language, and variant.</p></div>
+      <div class="benefit-row" data-preview="screens/configure-graded.webp"><span>02</span><h3>Every market price in one place</h3><p>Compare raw cards with PSA, BGS, CGC, ACE, TAG, AGS, and SGC grades using current marketplace data.</p></div>
+      <div class="benefit-row" data-preview="screens/vending.webp"><span>03</span><h3>Works for the way you collect</h3><p>Value one card, scan a binder, manage a collection, or run inventory at a show from the same app.</p></div>
+      <div class="benefit-preview" aria-hidden="true"><img src="screens/scanner.webp" alt="" /></div>
+    </section>
 
-    <div class="tape-row rev">
-      <div class="tape-track">
-        <!-- set B -->
-        <span class="tape-line">
-          <span><b>LUGIA V</b> · PSA 10 · <b>$1,475</b> <span class="up">▲ 4.1%</span></span><span class="sep">◆</span>
-          <span><b>UMBREON VMAX</b> · PSA 10 · <b>$2,340</b> <span class="up">▲ 2.8%</span></span><span class="sep">◆</span>
-          <span><b>CHARIZARD</b> · BGS 9.5 · <b>$1,120</b> <span class="up">▲ 0.9%</span></span><span class="sep">◆</span>
-          <span><b>GIRATINA V</b> · CGC 10 · <b>$690</b> <span class="up">▲ 3.2%</span></span><span class="sep">◆</span>
-          <span><b>RAYQUAZA VMAX</b> · PSA 9 · <b>$780</b> <span class="down">▼ 0.4%</span></span><span class="sep">◆</span>
-          <span><b>MEW EX</b> · PSA 10 · <b>$122</b> <span class="up">▲ 1.6%</span></span><span class="sep">◆</span>
-        </span>
-        <!-- set B duplicated for a seamless loop -->
-        <span class="tape-line">
-          <span><b>LUGIA V</b> · PSA 10 · <b>$1,475</b> <span class="up">▲ 4.1%</span></span><span class="sep">◆</span>
-          <span><b>UMBREON VMAX</b> · PSA 10 · <b>$2,340</b> <span class="up">▲ 2.8%</span></span><span class="sep">◆</span>
-          <span><b>CHARIZARD</b> · BGS 9.5 · <b>$1,120</b> <span class="up">▲ 0.9%</span></span><span class="sep">◆</span>
-          <span><b>GIRATINA V</b> · CGC 10 · <b>$690</b> <span class="up">▲ 3.2%</span></span><span class="sep">◆</span>
-          <span><b>RAYQUAZA VMAX</b> · PSA 9 · <b>$780</b> <span class="down">▼ 0.4%</span></span><span class="sep">◆</span>
-          <span><b>MEW EX</b> · PSA 10 · <b>$122</b> <span class="up">▲ 1.6%</span></span><span class="sep">◆</span>
-        </span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ RIVER CHAT ============ -->
-<section class="chat-sect" aria-labelledby="chat-title">
-  <div class="container">
-    <div class="sect-head center">
-      <span class="eyebrow">River</span>
-      <h2 id="chat-title" class="display" data-words>A market analyst in your pocket.</h2>
-      <p class="lede">River answers with real data from 7 specialized tools — pricing, history, listings, grade spreads — and shows its sources.</p>
-    </div>
-
-    <div class="chat-stage reveal" aria-hidden="true">
-      <div class="phone-glow"></div>
-      <div class="phone">
-        <div class="phone-screen">
-          <img class="shot" src="screens/chat.webp" alt="" loading="lazy" />
+    <section class="experience" id="how">
+      <div class="experience-sticky">
+        <div class="experience-copy">
+          <article class="active"><h2>Scan the whole binder</h2><p>Switch to binder mode and identify a full page of cards in one pass.</p></article>
+          <article><h2>Set the exact condition</h2><p>Price the card you actually own, from Near Mint through Damaged, without losing the exact variant.</p></article>
+          <article><h2>Run your show inventory</h2><p>Track asking prices, recent sales, revenue, and what is still for sale from the same app.</p></article>
+          <article><h2>Watch every collection</h2><p>River keeps binder values and portfolio history current as the market moves.</p></article>
         </div>
+        <div class="phone-stage"><div class="phone"><span class="island"></span><img id="story-shot" src="screens/binder-scan.webp" alt="River binder scanner" /></div><div class="progress"><i class="on"></i><i></i><i></i><i></i></div></div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ COLLECTIONS ============ -->
-<section class="sect coll-sect" id="collections" aria-labelledby="coll-title">
-  <div class="container coll-grid">
-    <div class="coll-copy">
-      <span class="eyebrow">Collections</span>
-      <h2 id="coll-title" class="display" data-words>Your whole binder, valued in real time.</h2>
-      <p class="lede">Every card priced at its exact variant, condition, and grade. Watch your portfolio move with the market — 7 days to all-time.</p>
-    </div>
-
-    <div class="phone reveal" aria-hidden="true">
-      <div class="phone-screen">
-        <img class="shot" src="screens/collections.webp" alt="" loading="lazy" />
+    <section class="plans" id="plans">
+      <div class="plans-head"><h2>Everything for the hobby</h2><p>Start by exploring every card. Unlock the complete River toolkit when you’re ready to track what you own.</p></div>
+      <div class="plan-grid">
+        <article><h3>Explore</h3><p>Search and browse the complete catalog.</p><strong>Free</strong><small>with an account</small><ul><li>English and Japanese sets</li><li>Cards and sealed products</li><li>Unlimited catalog search</li><li>Card and set details</li></ul><a href="#download">Download</a></article>
+        <article class="featured"><h3>River Pro</h3><p>Live market intelligence for your collection.</p><strong>Pro</strong><small>pricing shown in the App Store</small><ul><li>All raw and graded pricing</li><li>Collections and portfolio history</li><li>AI market assistant</li><li>Card and binder scanning</li><li>Selling inventory</li></ul><a href="#download">Get River Pro</a></article>
+        <article><h3>At the show</h3><p>A complete toolkit for vendors and traders.</p><strong>Vendor</strong><small>included with River Pro</small><ul><li>Organized selling groups</li><li>Live asking-price comparisons</li><li>Listed and sold status</li><li>Sales and revenue tracking</li></ul><a href="#download">Get started</a></article>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ BINDER SCAN ============ -->
-<section class="sect split" id="binder" aria-labelledby="binder-title">
-  <div class="container split-grid">
-    <div class="split-copy">
-      <span class="eyebrow">Batch scan</span>
-      <h2 id="binder-title" class="display" data-words>Scan the whole binder.</h2>
-      <p class="lede">Rip through a stack — or a full binder — in one session. Every card is matched, priced, and queued up; review the batch and add it all to a collection in one tap.</p>
-      <ul class="split-points">
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Import straight from your photo library, too</li>
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Running total prices the pile as you go</li>
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> A shoebox of bulk becomes a portfolio in an afternoon</li>
-      </ul>
-    </div>
-
-    <div class="phone reveal" aria-hidden="true">
-      <div class="phone-screen">
-        <img class="shot" src="screens/binder-scan.webp" alt="" loading="lazy" />
+    <section class="faq" id="faq">
+      <div class="faq-heading"><h2>Common questions</h2><p>Still have a question? Write to <a href="mailto:rivertcgapp@gmail.com">the team</a>. One of us will read it.</p></div>
+      <div class="faq-list">
+        <details open><summary>What is River AI TCG?<span>×</span></summary><p>River is an iPhone app that identifies trading cards, shows current raw and graded values, and tracks your collection as the market changes.</p></details>
+        <details><summary>Which cards does River support?<span>＋</span></summary><p>More than 50,000 English and Japanese cards, along with popular sealed products.</p></details>
+        <details><summary>Does scanning upload my photos?<span>＋</span></summary><p>No. Recognition runs on your device. Camera frames and scan photos are not sent to River or any third party.</p></details>
+        <details><summary>Which grading companies are included?<span>＋</span></summary><p>PSA, BGS, CGC, ACE, TAG, AGS, and SGC pricing is supported.</p></details>
+        <details><summary>Where does the pricing come from?<span>＋</span></summary><p>River uses aggregated marketplace pricing, recent comparable sales, and listings, and shows the sources inside the app.</p></details>
+        <details><summary>What happens if my Pro subscription ends?<span>＋</span></summary><p>Your data is retained. Resubscribing restores your collections, favorites, inventory, and portfolio history.</p></details>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ VENDOR MODE ============ -->
-<section class="sect split flip" id="vendor" aria-labelledby="vendor-title">
-  <div class="container split-grid">
-    <div class="split-copy">
-      <span class="eyebrow">Vendor mode · New</span>
-      <h2 id="vendor-title" class="display" data-words>Built for the show table.</h2>
-      <p class="lede">Turn inventory into shelves — "$5 binder", "Display case" — each item wearing a live price tag. Mark things sold as they move, and see what the day actually made you.</p>
-      <ul class="split-points">
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Refresh every price tag in one tap before doors open</li>
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Listed and sold status per item, swipe to settle</li>
-        <li><span class="pdot"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Price against the live market, not last month's comps</li>
-      </ul>
-    </div>
+    <section class="final-cta" id="download">
+      <div class="card-fan" data-fan aria-hidden="true"><img src="https://images.pokemontcg.io/base1/4.png" alt="" /><img src="https://images.pokemontcg.io/swsh11/186.png" alt="" /><img src="https://images.pokemontcg.io/swsh7/215.png" alt="" /><img src="https://images.pokemontcg.io/swsh7/218.png" alt="" /><img src="https://images.pokemontcg.io/swsh12/186.png" alt="" /></div>
+      <h2>Ready to know what you own?</h2><p>Scan your first card and see the market clearly.</p><a class="pill white" href="#" aria-label="Download River AI TCG on the App Store">Download</a>
+    </section>
+  </main>
 
-    <div class="phone reveal" aria-hidden="true">
-      <div class="phone-screen">
-        <img class="shot" src="screens/vending.webp" alt="" loading="lazy" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FEATURE GRID — every feature ============ -->
-<section class="sect grid-sect" id="features-all" aria-labelledby="grid-title">
-  <div class="container">
-    <div class="sect-head">
-      <span class="eyebrow">Everything else</span>
-      <h2 id="grid-title" class="display" data-words>Built for the whole hobby.</h2>
-      <p class="lede">The rest of the toolkit — search, sealed, history, and grading.</p>
-    </div>
-
-    <div class="feature-grid">
-      <article class="feature-card reveal">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </div>
-        <h3>Search every set</h3>
-        <p>Browse sets, open set details, and search across cards and sealed with infinite scroll — from Base Set to the newest release.</p>
-        <div class="chips"><span class="chip on">English</span><span class="chip">Japanese</span></div>
-      </article>
-
-      <article class="feature-card reveal">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/></svg>
-        </div>
-        <h3>Sealed, priced too</h3>
-        <p>Booster boxes, ETBs, tins, collections — sealed products get the same live pricing and history as your singles.</p>
-      </article>
-
-      <article class="feature-card reveal">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/><path d="M14 8h5v5"/></svg>
-        </div>
-        <h3>History &amp; receipts</h3>
-        <p>Scrubbable charts from 7 days to all-time, recent comparable sales with source attribution, and a one-tap jump to the live TCGplayer listing.</p>
-        <div class="chips"><span class="chip">7D</span><span class="chip on">30D</span><span class="chip">90D</span><span class="chip">1Y</span><span class="chip">ALL</span></div>
-      </article>
-
-      <article class="feature-card reveal">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-        </div>
-        <h3>Any grade, any grader</h3>
-        <p>Flip any card between raw and graded pricing — pick the company and the grade, 1 through 10.</p>
-        <div class="chips"><span class="chip on">PSA</span><span class="chip">BGS</span><span class="chip">CGC</span><span class="chip">ACE</span><span class="chip">TAG</span><span class="chip">AGS</span><span class="chip">SGC</span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CLOSING ============ -->
-<section class="closing" aria-labelledby="cta-title">
-  <canvas class="particles" data-particles data-center="0.38" data-amp="0.16" data-density="100" data-fade="0.46" aria-hidden="true"></canvas>
-  <div class="container">
-    <h2 id="cta-title" class="display" data-words>Stop guessing. Start trading with data.</h2>
-    <p class="lede">Free to try — sign in with Apple or Google.</p>
-    <!-- IMPORTANT: replace href="#" with the real App Store URL once published -->
-    <a class="download-btn" href="#" aria-label="Download River AI TCG on the App Store">
-      <svg class="glyph" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702"/></svg>
-      <span class="label"><span class="small">Download on the</span><span class="big">App Store</span></span>
-    </a>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer" role="contentinfo">
-  <canvas class="particles" data-particles data-center="0.5" data-amp="0.4" data-density="55" aria-hidden="true"></canvas>
-  <div class="container footer-grid">
-    <div class="brand">
-      <img class="brand-mark" src="river-logo.png" alt="" aria-hidden="true" />
-      <span>© 2026 River AI TCG</span>
-    </div>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:rivertcgapp@gmail.com">Support</a>
-    </nav>
-    <div class="footer-tag">Made for collectors.</div>
-  </div>
-</footer>
-
-<script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js" defer></script>
-<script src="script.js?v=20260806" defer></script>
+  <footer>
+    <div class="footer-brand"><a class="nav-logo" href="#top"><img src="river-logo.png" alt="" /></a><p>Your collection, understood.</p><div class="actions"><a class="pill black" href="#download">Download</a><a class="pill outline" href="mailto:rivertcgapp@gmail.com">Contact</a></div></div>
+    <div><b>Product</b><a href="#overview">Overview</a><a href="#how">How it works</a><a href="#plans">Plans</a><a href="#faq">FAQ</a></div>
+    <div><b>Company</b><a href="mailto:rivertcgapp@gmail.com">Contact</a></div>
+    <div><b>Legal</b><a href="privacy.html">Privacy Notice</a><a href="terms.html">Terms of Use</a></div>
+    <p class="copyright">© 2026 River AI TCG</p><span class="footer-ghost">River</span>
+  </footer>
+  <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js" defer></script>
+  <script src="script.js?v=20260826f" defer></script>
 </body>
 </html>
