@@ -293,7 +293,11 @@
       });
     });
   }
-  if (fan && 'IntersectionObserver' in window) {
+  const navigationEntry = performance.getEntriesByType?.('navigation')?.[0];
+  const skipFanReveal = location.hash === '#download' || navigationEntry?.type === 'reload';
+  if (fan && skipFanReveal) {
+    fan.classList.add('revealed', 'skip-reveal');
+  } else if (fan && 'IntersectionObserver' in window) {
     new IntersectionObserver((entries, observer) => {
       if (entries[0]?.isIntersecting) { fan.classList.add('revealed'); observer.disconnect(); }
     }, { rootMargin: '-80px' }).observe(fan);
