@@ -1,7 +1,7 @@
 /**
  * Card share-link previews for rivertcg.com/card/<id>.
  *
- * The River AI app shares links like:
+ * The River TCG app shares links like:
  *   https://rivertcg.com/card/<id>?n=<name>&p=<price>&s=<selection>&i=<imageUrl>
  *
  * Devices WITH the app never reach this worker — iOS opens the app directly
@@ -61,7 +61,7 @@ export default {
         : price
           ? `${name} — ${price}`
           : name;
-    const description = `${name} · Live prices in River AI`;
+    const description = `${name} · Live prices in River TCG`;
     const canonical = `https://rivertcg.com/card/${encodeURIComponent(match[1])}`;
 
     const html = `<!DOCTYPE html>
@@ -70,7 +70,7 @@ export default {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${esc(title)}</title>
-  <meta property="og:site_name" content="River AI">
+  <meta property="og:site_name" content="River TCG">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
