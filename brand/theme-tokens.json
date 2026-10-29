@@ -1,0 +1,68 @@
+{
+  "name": "River AI TCG",
+  "version": "1.0.0",
+  "extractedAt": "2026-09-17",
+  "sources": ["../styles.css", "../index.html", "../script.js", "../river-logo.png", "../screens/"],
+  "scope": "Local website extraction. Social adaptations are proposed production defaults, not platform requirements.",
+  "website": {
+    "colors": {
+      "ink": "#0B2343",
+      "inkSecondary": "#5F748C",
+      "heroMuted": "#5C7592",
+      "deep": "#1D52A2",
+      "blue": "#358FE3",
+      "sky": "#8FC6F2",
+      "mist": "#EAF6FF",
+      "panel": "#DCEEFF",
+      "backgroundHighlight": "#EFF8FF",
+      "ctaHighlight": "#3A98E8",
+      "darkSurface": "#071D3D",
+      "darkStart": "#173F7F",
+      "featuredStart": "#205EAF",
+      "featuredEnd": "#123D79",
+      "inverse": "#FFFFFF",
+      "inverseSecondary": "#B9D7F1",
+      "line": "rgba(29,84,148,0.20)"
+    },
+    "gradients": {
+      "page": "linear-gradient(180deg,#eaf6ff 0%,#dceeff 24%,#eff8ff 56%,#dceeff 100%)",
+      "action": "linear-gradient(145deg,#3a98e8,#1d52a2)",
+      "productPanel": "radial-gradient(circle at 74% 42%,rgba(143,198,242,.55),transparent 30%),linear-gradient(145deg,#e9f6ff 0%,#cfe6fa 100%)",
+      "darkStory": "linear-gradient(145deg,#173f7f 0%,#071d3d 100%)",
+      "featured": "linear-gradient(145deg,#205eaf 0%,#123d79 100%)",
+      "closing": "linear-gradient(145deg,#205eaf 0%,#0c2d61 72%,#071d3d 100%)"
+    },
+    "typography": {
+      "family": "'Google Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
+      "hero": {"sizePx": 68, "weight": 400, "emphasisWeight": 700, "lineHeight": 1.06, "trackingEm": -0.025},
+      "mobileHero": {"sizePx": 37, "lineHeight": 1.04},
+      "section": {"sizePxRange": [50, 52], "weight": 400, "trackingEmRange": [-0.035, -0.025]},
+      "body": {"sizePxRange": [15, 17], "lineHeightRange": [1.5, 1.55]},
+      "eyebrow": {"sizePxRange": [10, 12], "weightRange": [500, 600], "trackingEmRange": [0.08, 0.10]}
+    },
+    "radiusPx": {"pill": 999, "contentPanel": 24, "menu": 28, "closingPanel": 38, "phoneRange": [48, 49], "cardImage": 5},
+    "shadows": {
+      "card": "0 18px 50px -16px rgba(0,0,0,.5)",
+      "action": "0 14px 30px -18px rgba(29,82,162,.85)",
+      "featuredPanel": "0 30px 70px -32px rgba(29,82,162,.65)"
+    },
+    "motion": {"ease": "cubic-bezier(.22,.68,.35,1)", "interfaceDurationMsRange": [350, 550], "heroDurationMs": 1000, "heroTravelPx": 24, "fanLoopMs": 5000},
+    "cardAspectRatio": "5:7",
+    "fanRotationDegrees": [-13, -7, 0, 7, 13],
+    "logo": "../river-logo.png"
+  },
+  "socialAdaptation": {
+    "status": "proposed",
+    "artboardsPx": {"portrait": [1080, 1350], "square": [1080, 1080], "vertical": [1080, 1920]},
+    "spacingPx": [12, 24, 36, 48, 72, 96],
+    "feedMarginPx": 72,
+    "verticalGuidePx": {"side": 90, "top": 250, "bottom": 250, "note": "Composition guide; verify actual publishing crop and overlays."},
+    "panelRadiusPx": 48,
+    "typographyPx": {"headlineRange": [80, 112], "bodyRange": [36, 44], "labelRange": [24, 28], "ctaRange": [30, 36]},
+    "lightCompositionRatio": {"paleBackground": 0.7, "imageryAndNavyStructure": 0.2, "blueAccents": 0.1},
+    "logoClearSpaceInLogoDiameters": 0.5,
+    "voice": ["calm", "direct", "knowledgeable", "helpful", "collector-focused"],
+    "motifs": ["floating authentic cards", "three-to-five-card fan", "real app in dark phone", "soft blue halo", "outlined capsule", "fine rules and sequence labels"],
+    "avoid": ["neon rainbow lighting", "purple or pink brand accents", "distressed textures", "comic typography", "crowded stickers", "invented card artwork", "redrawn logo", "fabricated UI", "unprovided prices or performance claims"]
+  }
+}

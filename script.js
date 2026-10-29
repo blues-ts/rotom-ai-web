@@ -248,6 +248,7 @@
   const bars = [...document.querySelectorAll('.progress i')];
   const shot = document.querySelector('#story-shot');
   const phone = document.querySelector('.phone');
+  const screenSrcset = (src) => `${src.replace('.webp', '-660.webp')} 660w, ${src} 990w`;
   const shots = ['screens/binder-scan.webp', 'screens/configure-raw.webp', 'screens/vending.webp', 'screens/collections.webp'];
   const shotAlts = ['River binder scanner', 'River raw card pricing configuration', 'River vending dashboard', 'River collections dashboard'];
   let active = 0;
@@ -259,25 +260,6 @@
     const [imageId, name] = shuffledHeroCards[cards.length + index];
     image.src = `https://images.pokemontcg.io/${imageId}.png`;
     image.alt = name;
-  });
-  let downloadScrollTimer;
-  document.querySelectorAll('a[href="#download"]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      if (!finalCta) return;
-      event.preventDefault();
-      const centerOffset = -Math.max(0, (innerHeight - finalCta.offsetHeight) / 2);
-      const targetTop = finalCta.getBoundingClientRect().top + scrollY + centerOffset;
-      if (lenis) lenis.scrollTo(finalCta, { offset: centerOffset, duration: 1.15 });
-      else scrollTo({ top: targetTop, behavior: reduced ? 'auto' : 'smooth' });
-      clearTimeout(downloadScrollTimer);
-      downloadScrollTimer = setTimeout(() => {
-        const bounds = finalCta.getBoundingClientRect();
-        const correction = bounds.top + bounds.height / 2 - innerHeight / 2;
-        if (Math.abs(correction) < 1) return;
-        if (lenis) lenis.scrollTo(scrollY + correction, { duration: .3 });
-        else scrollBy({ top: correction, behavior: reduced ? 'auto' : 'smooth' });
-      }, reduced ? 0 : 1250);
-    });
   });
   if (finalCta && location.hash === '#download') {
     requestAnimationFrame(() => {
@@ -382,7 +364,7 @@
         bars.forEach((item, i) => item.classList.toggle('on', i === active));
         if (shot && phone) {
           phone.style.opacity = '.55'; phone.style.transform = 'translateY(28px) scale(.93)';
-          setTimeout(() => { shot.src = shots[active]; shot.alt = shotAlts[active]; phone.style.opacity = '1'; phone.style.transform = 'none'; }, 180);
+          setTimeout(() => { shot.srcset = screenSrcset(shots[active]); shot.src = shots[active]; shot.alt = shotAlts[active]; phone.style.opacity = '1'; phone.style.transform = 'none'; }, 180);
         }
       }
     }
@@ -409,7 +391,7 @@
     benefits.querySelectorAll('.benefit-row').forEach((row) => {
       row.addEventListener('mouseenter', (event) => {
         const rect = benefits.getBoundingClientRect(); x = targetX = event.clientX - rect.left + 35; y = targetY = event.clientY - rect.top - 80;
-        if (previewImage) previewImage.src = row.dataset.preview;
+        if (previewImage) { previewImage.srcset = screenSrcset(row.dataset.preview); previewImage.src = row.dataset.preview; }
         preview.classList.add('show'); if (!previewRunning) { previewRunning = true; requestAnimationFrame(follow); }
       });
       row.addEventListener('mouseleave', () => { preview.classList.remove('show'); previewRunning = false; });
