@@ -1,28 +1,32 @@
-# River website — October 2026 redesign
+# River website — approach B: Product Studio
 
-The current website adapts Monarch's consumer-app layout patterns to River's identity. Mobbin references establish design inspiration, not evidence of conversion performance.
+Branch: `design/river-product-studio`.
 
-References inspected:
-- Product overview: https://mobbin.com/sites/sections/484401ea-fc2f-400e-9069-107ed3dcf00d
-- Pricing: https://mobbin.com/sites/sections/1630ffa5-2826-4032-a8d1-3238a59d3d51
+The previous light, Monarch-inspired approach is saved on `design/river-monarch` (commit `d73a7f5`). This second direction uses Linear's product presentation patterns from Mobbin. References establish visual inspiration, not conversion results.
 
-## Current direction
+## References inspected
 
-Modern sans serif headlines (Manrope, semibold, with upright blue emphasis), Google Sans interface text, pale blue product surfaces, restrained navy text, and a clear blue download action. Real River screenshots provide the product evidence. No invented ratings, testimonials, usage statistics, or free trials.
+- Centered hero and large product showcase: https://mobbin.com/sites/sections/40a46191-a57a-4bab-9a92-94fc14cad817
+- Dark feature panels: https://mobbin.com/sites/sections/fd00bc30-e30d-4d21-bbd5-e7bf82aa681d
+- Product detail presentation: https://mobbin.com/sites/sections/ac08f1c7-d536-4996-91cc-85da059dcade
 
-- Background: #f6f8fb
-- Primary text: #122b47
-- Secondary text: #57697d
-- Action: #205bc4
-- Dark product panel: #15385c
-- Hero surface: #dfebf7
+## Direction
 
-The homepage moves from product introduction to an interactive overview, three-step walkthrough, River AI, additional workflows, free/Pro comparison, FAQ, and download. Billing selectors show the existing weekly/monthly/yearly prices; subscriptions are chosen inside the app. Legal pages share the typography and surfaces with their text unchanged.
+Dark mode throughout, including legal pages. Modern Manrope headlines, quiet Google Sans supporting text, charcoal surfaces, slate borders, pale blue accents, and high-contrast download buttons. A centered headline leads into three real River app screens. Feature selection sits beneath a wide preview; bordered cards organize workflows and additional capabilities.
 
-`theme-profile.md`, `theme-board.html`, and `theme-tokens.json` describe the previous September theme and its social adaptations. Use this document and the current website styles for the October website direction.
+- Background: #090c12
+- Primary text: #edf1f7
+- Secondary text: #a1aaba
+- Blue highlight: #9ebfff
+- Panel: #111720
+- Border: #293241
+
+`studio.css` contains the alternative layout and palette over shared base styles. All app images are existing River screenshots. Pricing and legal text are preserved. Arrow keys navigate the feature selector; billing choices update the displayed price, with subscriptions selected inside the app.
+
+The September theme profile, board, and tokens remain historical references for the earlier website and social assets.
+
+Neither branch has been published or measured in a conversion experiment.
 
 ## Validation
 
-Browser checks passed at 1440, 768, 390, and 320px with no horizontal overflow. Checked product tabs and arrow-key navigation, all billing choices, mobile menu and Escape, internal anchor targets, legal page rendering, and JavaScript runtime errors. Reviewed desktop and mobile screenshots. Compared legal page text with the prior version: unchanged.
-
-This redesign is local; it has not been published or measured in a conversion experiment.
+Browser checks passed at 1440, 768, 390, and 320px, including feature selection and keyboard navigation, all billing options, mobile menu/Escape, internal anchors, legal pages, and absence of runtime errors. Desktop and mobile screenshots were visually reviewed. Legal text matches the saved first design.
