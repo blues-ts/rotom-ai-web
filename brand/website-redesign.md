@@ -1,32 +1,30 @@
-# River website — approach B: Product Studio
+# River website — Bevel-inspired direction
 
-Branch: `design/river-product-studio`.
+Current branch: `design/river-product-studio`. The original light design remains on `design/river-monarch`.
 
-The previous light, Monarch-inspired approach is saved on `design/river-monarch` (commit `d73a7f5`). This second direction uses Linear's product presentation patterns from Mobbin. References establish visual inspiration, not conversion results.
+## References
 
-## References inspected
+Inspected Bevel's live homepage and these Mobbin sections:
 
-- Centered hero and large product showcase: https://mobbin.com/sites/sections/40a46191-a57a-4bab-9a92-94fc14cad817
-- Dark feature panels: https://mobbin.com/sites/sections/fd00bc30-e30d-4d21-bbd5-e7bf82aa681d
-- Product detail presentation: https://mobbin.com/sites/sections/ac08f1c7-d536-4996-91cc-85da059dcade
+- Live homepage: https://www.bevel.health/
+- Additional feature selector: https://mobbin.com/sites/sections/6c021d8c-0dff-4d1d-9eb0-a091e30af6f0
+- Intelligence section: https://mobbin.com/sites/sections/b619fd46-b1e8-4e4a-bd6c-f02b6baaa4a6
+- Closing download section: https://mobbin.com/sites/sections/f051fa2e-d46c-4db9-8046-bdd726b28a7d
 
-## Direction
+## Adaptation
 
-Dark mode throughout, including legal pages. Modern Manrope headlines, quiet Google Sans supporting text, charcoal surfaces, slate borders, pale blue accents, and high-contrast download buttons. A centered headline leads into three real River app screens. Feature selection sits beneath a wide preview; bordered cards organize workflows and additional capabilities.
+Floating pill navigation, expansive rounded hero, oversized overlapping product imagery, rounded feature cards, a centered intelligence section, and a vertical additional-feature selector. Retains the user's dark-mode preference, River branding, modern Manrope typography, and genuine River app screens. The atmospheric hero is rendered with CSS; no Bevel imagery, ratings, testimonials, or product claims are reused.
 
-- Background: #090c12
-- Primary text: #edf1f7
-- Secondary text: #a1aaba
-- Blue highlight: #9ebfff
-- Panel: #111720
-- Border: #293241
+Subscription pricing, plans, billing controls, and plan-related FAQ entries remain removed. Card valuation features remain. Legal content is unchanged, with matching dark surfaces and rounded navigation.
 
-`studio.css` contains the alternative layout and palette over shared base styles. All app images are existing River screenshots. Pricing and legal text are preserved. Arrow keys navigate the feature selector; billing choices update the displayed price, with subscriptions selected inside the app.
-
-The September theme profile, board, and tokens remain historical references for the earlier website and social assets.
-
-Neither branch has been published or measured in a conversion experiment.
+`studio.css` contains the current design over the shared base styles. The September theme profile, board, and tokens remain historical references.
 
 ## Validation
 
-Browser checks passed at 1440, 768, 390, and 320px, including feature selection and keyboard navigation, all billing options, mobile menu/Escape, internal anchors, legal pages, and absence of runtime errors. Desktop and mobile screenshots were visually reviewed. Legal text matches the saved first design.
+Browser checks passed at 1440, 768, 390, and 320px: no horizontal overflow, functioning feature selection and keyboard controls, mobile menu/Escape, valid internal anchors, rendering legal pages, and no runtime errors. Confirmed the plans section is absent. Reviewed desktop and mobile screenshots.
+
+Changes are local and have not been published or measured in a conversion experiment.
+
+## River color alignment
+
+Uses the established brand palette: deep navy #071D3D, navy #0B2343, River deep #1D52A2, River blue #358FE3, sky #8FC6F2, and mist #EAF6FF. Dark panels, glows, buttons, and legal pages share these blue tones. Navigation and footer wordmarks use “River”.

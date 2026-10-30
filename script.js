@@ -1,26 +1,67 @@
 (() => {
-  const menu = document.querySelector('#site-menu');
-  const toggle = document.querySelector('.menu-toggle');
-  function closeMenu(returnFocus = false) {
-    menu.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Open menu');
-    if (returnFocus) toggle.focus();
+  const menuButton = document.querySelector('.menu-pill');
+  const menu = document.querySelector('.site-menu');
+  const menuShell = document.querySelector('.menu-shell');
+  const menuContent = document.querySelector('.menu-content');
+  const header = document.querySelector('.site-header');
+
+  // Keep the content at its expanded width while its outer shell animates.
+  // Measuring wrapped text at the closed button width overestimates the height.
+  function syncMenuContentWidth() {
+    const shellStyle = getComputedStyle(menuShell);
+    const inset = parseFloat(shellStyle.right);
+    const padding = parseFloat(shellStyle.paddingLeft) + parseFloat(shellStyle.paddingRight);
+    menuContent.style.width = `${header.clientWidth - inset * 2 - padding}px`;
   }
-  toggle.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
-    menu.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-  });
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') closeMenu(true);
-  });
-  document.addEventListener('click', event => {
-    if (!event.target.closest('.site-header')) closeMenu();
-  });
-  matchMedia('(min-width: 761px)').addEventListener('change', () => closeMenu());
+  syncMenuContentWidth();
+  new ResizeObserver(syncMenuContentWidth).observe(header);
+  let menuOpen = false;
+  let menuTimer;
+
+  function setMenu(nextOpen, returnFocus = false) {
+    if (!menuButton || !menu || !menuShell || nextOpen === menuOpen) return;
+    menuOpen = nextOpen;
+    clearTimeout(menuTimer);
+
+    menuButton.setAttribute('aria-expanded', String(nextOpen));
+    menuButton.setAttribute('aria-label', nextOpen ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', String(!nextOpen));
+    menu.inert = !nextOpen;
+
+    if (nextOpen) {
+      syncMenuContentWidth();
+      const targetHeight = menuContent.offsetHeight;
+      menuShell.classList.remove('closing');
+      menu.style.height = '0px';
+      menuShell.classList.add('open');
+      requestAnimationFrame(() => {
+        if (menuOpen) menu.style.height = `${targetHeight}px`;
+      });
+      menuTimer = setTimeout(() => {
+        if (menuOpen) menu.style.height = 'auto';
+      }, 460);
+      return;
+    }
+
+    menu.style.height = `${menu.getBoundingClientRect().height}px`;
+    menuShell.classList.add('closing');
+    menu.offsetHeight;
+    menuShell.classList.remove('open');
+    requestAnimationFrame(() => { if (!menuOpen) menu.style.height = '0px'; });
+    menuTimer = setTimeout(() => menuShell.classList.remove('closing'), 460);
+    if (returnFocus) menuButton.focus();
+  }
+
+  if (menuButton && menu && menuShell) {
+    menuButton.addEventListener('click', () => setMenu(!menuOpen));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    addEventListener('pointerdown', (event) => {
+      if (menuOpen && !menuShell.contains(event.target)) setMenu(false);
+    });
+    addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuOpen) setMenu(false, true);
+    });
+  }
 
   const features = {
     collection: { image: 'collections', alt: 'River collections overview with portfolio value and binders', label: 'YOUR COLLECTION, AT A GLANCE' },
@@ -54,19 +95,4 @@
       if (next !== undefined) { event.preventDefault(); tabs[next].focus(); selectFeature(tabs[next]); }
     });
   });
-  const plans = {
-    weekly: ['$3.99', ' / week', 'Billed weekly. All Pro features included.'],
-    monthly: ['$9.99', ' / month', 'Billed monthly. All Pro features included.'],
-    yearly: ['$79.99', ' / year', 'Billed yearly. Equivalent to $6.66 per month.']
-  };
-  function updatePlan(value) {
-    const [price, period, billing] = plans[value];
-    document.querySelector('#plan-price').textContent = price;
-    document.querySelector('#plan-period').textContent = period;
-    document.querySelector('#plan-billing').textContent = billing;
-  }
-  document.querySelectorAll('[name="billing"]').forEach(input => {
-    input.addEventListener('change', () => updatePlan(input.value));
-  });
-  updatePlan(document.querySelector('[name="billing"]:checked').value);
 })();
