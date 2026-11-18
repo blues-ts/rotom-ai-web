@@ -1,0 +1,12 @@
+# rivertcg.com — search engines and AI assistants are welcome to read and cite
+# the site. Content-Signal (contentsignals.org): OK for search and AI answers,
+# not for AI model training.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+# Repo folders that get published but aren't pages.
+Disallow: /brand/
+Disallow: /worker/
+
+Sitemap: https://rivertcg.com/sitemap.xml

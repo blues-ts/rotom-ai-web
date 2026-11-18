@@ -17,9 +17,9 @@
 
 const IMAGE_HOSTS = new Set(["images.scrydex.com", "images.pokemontcg.io"]);
 
-// TODO: once the app is live, redirect humans to the App Store instead:
-//   https://apps.apple.com/app/id<APP_ID>
-const HUMAN_REDIRECT = "/";
+// People without the app are sent to the App Store listing.
+const HUMAN_REDIRECT =
+  "https://apps.apple.com/us/app/river-tcg-card-scanner/id6785658804";
 
 const esc = (s) =>
   s.replace(
@@ -86,6 +86,8 @@ export default {
       headers: {
         "content-type": "text/html; charset=utf-8",
         "cache-control": "public, max-age=3600",
+        // Share links are previews, not pages — keep them out of search.
+        "x-robots-tag": "noindex",
       },
     });
   },
