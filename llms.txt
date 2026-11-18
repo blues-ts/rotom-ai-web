@@ -1,0 +1,37 @@
+# River TCG
+
+> River TCG ("River: TCG Card Value Scanner") is an iPhone app for Pokémon trading card collectors. It scans cards with the camera, shows current market prices (raw and graded), checks card centering, and tracks the value of a collection over time. Free to download, with an optional River TCG Pro subscription.
+
+- App Store: https://apps.apple.com/us/app/river-tcg-card-scanner/id6785658804
+- Platform: iPhone, iOS 16.4 or later
+- Website: https://rivertcg.com/
+- Contact: rivertcgapp@gmail.com
+
+## What River does
+
+- Card scanning: recognizes a Pokémon card from the live camera (Auto or Tap mode), including when glare hides the artwork. Build a stack and add every card to a collection in one tap. Scanning a whole binder page in one shot is Pro.
+- Prices: market values from a licensed pricing provider. Near Mint market price is free; pricing by condition, variant, and grade, plus price history and recent sold prices, is Pro.
+- Graded prices: PSA, BGS, CGC, SGC, ACE, TAG, AGS, and ARS, with prices for each grade (Pro).
+- Centering check (Pro): photograph a card's front and back; River measures left/right and top/bottom centering and shows the centering grade it could reach at major grading companies.
+- Collections and binders: track a collection's total value automatically, or arrange nine-pocket binder pages. Free covers one collection of up to 25 cards; Pro is unlimited.
+- Daily movers: today's biggest gainers and losers (preview free, full list Pro).
+- River AI (Pro): chat about prices, grading scenarios, and your own collection.
+- River Lens (Pro): prices cards shown on your screen (streams, videos, marketplaces) in a Live Activity and the Dynamic Island. English cards only.
+- Vendor mode (Pro): buy, sell, and trade at card shows, track cost, profit and per-show results, print price labels, and export sales to CSV.
+- Coverage: more than 50,000 English and Japanese Pokémon cards, plus popular sealed products.
+
+## Privacy
+
+- Card recognition runs on the iPhone. Camera frames and scan photos are not uploaded.
+- River Lens recognition also runs on-device; only card IDs are sent to look up prices.
+- River AI chat is powered by the Google Gemini API and asks permission before any chat data leaves the device.
+
+## Pages
+
+- [Home](https://rivertcg.com/): overview, features, and FAQ
+- [Privacy Policy](https://rivertcg.com/privacy.html)
+- [Terms of Service](https://rivertcg.com/terms.html)
+
+## Notes
+
+River is an independent app and is not affiliated with, endorsed by, or sponsored by Nintendo, The Pokémon Company, or any other trading card manufacturer. Prices are informational and come from a third-party data provider.
