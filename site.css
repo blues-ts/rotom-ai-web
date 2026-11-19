@@ -137,10 +137,9 @@ h1 { font-size: clamp(44px, 7.4vw, 84px); letter-spacing: -0.035em; }
 .card-text { padding-bottom: 32px; }
 /* Pinned to the card bottom so phones line up even when copy wraps differently. */
 .card-shot { margin-top: auto; padding: 0 36px; height: 340px; overflow: hidden; }
-.card-shot img {
-  border-radius: 32px 32px 0 0;
-  box-shadow: 0 0 0 1px rgb(var(--ice) / .12);
-}
+/* Same bezel as the other phones, cut off by the card's bottom edge. */
+.card-shot .phone { padding: 8px 8px 0; border-radius: 48px 48px 0 0; }
+.card-shot .phone img { border-radius: 40px 40px 0 0; }
 
 /* Rows */
 .rows { display: grid; gap: 140px; }
