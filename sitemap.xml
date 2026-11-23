@@ -3,6 +3,8 @@
      e.g. every guide at https://rivertcg.com/guides/<slug>/ -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://rivertcg.com/</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://rivertcg.com/guides/</loc><lastmod>2026-11-22</lastmod></url>
+  <url><loc>https://rivertcg.com/guides/pokemon-card-centering/</loc><lastmod>2026-11-22</lastmod></url>
   <url><loc>https://rivertcg.com/privacy.html</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://rivertcg.com/terms.html</loc><lastmod>2026-11-18</lastmod></url>
 </urlset>

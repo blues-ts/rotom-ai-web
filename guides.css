@@ -1,0 +1,85 @@
+/* Guides — long-form article pages. Loaded after site.css and reuses its tokens. */
+
+.crumbs { font-size: 14px; color: var(--faint); margin-bottom: 20px; }
+.crumbs a { color: var(--muted); }
+.crumbs a:hover { color: var(--text); }
+
+/* Guides index */
+.guides-head { padding: 80px 0 48px; max-width: 720px; }
+.guides-head h1 { font-size: clamp(38px, 6vw, 60px); }
+.guides-head p { margin-top: 18px; color: var(--muted); font-size: 19px; }
+.guide-list { display: grid; gap: 16px; padding-bottom: 120px; max-width: 820px; }
+.guide-item {
+  display: block; padding: 28px 30px; border-radius: 22px;
+  background: var(--glass); border: 1px solid var(--glass-line);
+  transition: border-color .2s, transform .2s var(--ease);
+}
+.guide-item:hover { border-color: rgb(var(--ice) / .18); transform: translateY(-1px); }
+.guide-item h2 { font-size: 22px; line-height: 1.25; letter-spacing: -0.015em; }
+.guide-item p { margin-top: 10px; color: var(--muted); font-size: 16px; }
+.guide-meta { margin-top: 14px; font-size: 14px; color: var(--faint); }
+
+/* Article */
+.article { width: min(720px, 100% - 40px); margin-inline: auto; padding: 72px 0 40px; }
+.article h1 { font-size: clamp(34px, 5.2vw, 52px); }
+.article .dek { margin-top: 18px; color: var(--muted); font-size: 19px; }
+.article .byline { margin-top: 18px; font-size: 14px; color: var(--faint); }
+.prose { margin-top: 48px; }
+.prose h2 { font-size: clamp(26px, 3.4vw, 32px); margin: 64px 0 18px; line-height: 1.15; }
+.prose h3 { font-size: 20px; margin: 36px 0 12px; line-height: 1.25; letter-spacing: -0.015em; }
+.prose p, .prose li { color: var(--body); font-size: 18px; line-height: 1.65; }
+.prose p + p { margin-top: 18px; }
+.prose ul, .prose ol { margin: 18px 0; padding-left: 24px; }
+.prose li + li { margin-top: 10px; }
+.prose strong { color: var(--text); }
+.prose a { color: var(--accent-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.prose code { font: 600 16px/1 ui-monospace, "SF Mono", Menlo, monospace; color: var(--text); background: var(--glass); padding: 3px 7px; border-radius: 6px; }
+
+.answer {
+  margin-top: 40px; padding: 26px 28px; border-radius: 22px;
+  background: var(--glass); border: 1px solid var(--glass-line);
+}
+.answer .label { color: var(--accent-soft); font-weight: 600; font-size: 14px; margin-bottom: 10px; }
+.answer p { font-size: 18px; line-height: 1.6; }
+
+.formula {
+  margin: 24px 0; padding: 22px 24px; border-radius: 18px; text-align: center;
+  background: var(--glass); border: 1px solid var(--glass-line);
+  font: 600 18px/1.5 ui-monospace, "SF Mono", Menlo, monospace; color: var(--text);
+  overflow-x: auto;
+}
+
+figure { margin: 32px 0; }
+figure svg { display: block; width: 100%; height: auto; max-width: 340px; margin-inline: auto; }
+figcaption { margin-top: 14px; text-align: center; font-size: 15px; color: var(--muted); }
+.shot { display: flex; justify-content: center; }
+.shot .phone { width: min(280px, 70vw); }
+
+.table-wrap { margin: 24px 0; overflow-x: auto; border: 1px solid var(--glass-line); border-radius: 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 16px; min-width: 520px; }
+th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--glass-line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { color: var(--muted); font-weight: 600; font-size: 14px; background: var(--glass); }
+td { color: var(--body); }
+td strong { color: var(--text); }
+.note { font-size: 15px !important; color: var(--muted) !important; }
+
+.cta {
+  margin: 72px 0 0; padding: 40px 32px; border-radius: var(--radius); text-align: center;
+  background: var(--glass); border: 1px solid var(--glass-line);
+  display: flex; flex-direction: column; align-items: center;
+}
+.cta img { width: 64px; height: 64px; margin-bottom: 20px; }
+.cta h2 { font-size: 28px; }
+.cta p { margin: 12px 0 26px; color: var(--muted); max-width: 440px; }
+
+.article .faq-list { margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .article { width: calc(100% - 32px); padding-top: 48px; }
+  .guides-head { padding-top: 56px; }
+  .guide-item { padding: 22px 20px; }
+  .prose p, .prose li { font-size: 17px; }
+  .answer { padding: 22px 20px; }
+  .cta { padding: 32px 20px; }
+}
