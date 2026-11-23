@@ -216,3 +216,7 @@ details p { padding: 0 0 26px; color: var(--muted); max-width: 640px; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Language switcher (footer) */
+.footer .lang { flex-basis: 100%; gap: 18px; padding-top: 18px; border-top: 1px solid var(--glass-line); }
+.footer .lang a[aria-current] { color: var(--text); }

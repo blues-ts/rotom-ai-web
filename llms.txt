@@ -32,6 +32,8 @@
 - [Guides](https://rivertcg.com/guides/): practical guides for Pokémon card collectors
 - [Privacy Policy](https://rivertcg.com/privacy.html)
 - [Terms of Service](https://rivertcg.com/terms.html)
+- [Español](https://rivertcg.com/es/): Spanish version of the site and guides
+- [Português (Brasil)](https://rivertcg.com/pt-br/): Brazilian Portuguese version of the site and guides
 
 ## Guides
 
