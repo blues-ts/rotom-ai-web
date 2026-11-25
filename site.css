@@ -259,3 +259,22 @@ details p { padding: 0 0 26px; color: var(--muted); max-width: 640px; }
   .nav-actions .narrow { display: inline; }
   .btn-small.btn-ghost { padding: 0 14px 0 12px; }
 }
+
+/* Android robot says hi on hover */
+.droid { transform-origin: 50% 85%; overflow: visible; }
+.droid .ant { transform-origin: 50% 100%; transform-box: fill-box; }
+.btn:hover .droid, .android:hover .droid-lg { animation: droid-hi .8s var(--ease); }
+.btn:hover .droid .ant, .android:hover .droid-lg .ant { animation: droid-ant .8s var(--ease); }
+@keyframes droid-hi {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-16deg); }
+  45% { transform: rotate(13deg); }
+  70% { transform: rotate(-7deg); }
+  85% { transform: rotate(3deg); }
+}
+@keyframes droid-ant {
+  0%, 100% { transform: scaleY(1); }
+  25% { transform: scaleY(1.25); }
+  50% { transform: scaleY(.85); }
+  75% { transform: scaleY(1.1); }
+}
