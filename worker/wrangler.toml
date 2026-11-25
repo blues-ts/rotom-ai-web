@@ -2,8 +2,17 @@ name = "rivertcg-card-preview"
 main = "src/index.js"
 compatibility_date = "2026-07-13"
 
-# Intercepts ONLY shared-card links; the rest of rivertcg.com stays on
-# GitHub Pages. Requires the rivertcg.com zone on this Cloudflare account.
+# Intercepts ONLY these paths; the rest of rivertcg.com stays on GitHub Pages.
+# Requires the rivertcg.com zone on this Cloudflare account.
+#   /card/*  shared-card link previews
+#   /api/*   Android waitlist signup (POST /api/waitlist)
 routes = [
-  { pattern = "rivertcg.com/card/*", zone_name = "rivertcg.com" }
+  { pattern = "rivertcg.com/card/*", zone_name = "rivertcg.com" },
+  { pattern = "rivertcg.com/api/*", zone_name = "rivertcg.com" }
 ]
+
+# Android waitlist emails. Table: schema.sql.
+[[d1_databases]]
+binding = "DB"
+database_name = "river-waitlist"
+database_id = "3ef79feb-32d1-4fb6-999f-4f62d8615f67"

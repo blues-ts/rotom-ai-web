@@ -1,4 +1,7 @@
 /**
+ * rivertcg.com worker: card share-link previews (/card/<id>) and the
+ * Android waitlist signup endpoint (/api/waitlist, see waitlist.js).
+ *
  * Card share-link previews for rivertcg.com/card/<id>.
  *
  * The River TCG app shares links like:
@@ -14,6 +17,8 @@
  * auth. To stop strangers minting rivertcg.com links that unfurl arbitrary
  * images, og:image only accepts whitelisted card-CDN hosts.
  */
+
+import { handleWaitlist } from "./waitlist.js";
 
 const IMAGE_HOSTS = new Set(["images.scrydex.com", "images.pokemontcg.io"]);
 
@@ -31,8 +36,14 @@ const esc = (s) =>
   );
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === "/api/waitlist") return handleWaitlist(request, env);
+    return handleCard(url);
+  },
+};
+
+function handleCard(url) {
     const match = url.pathname.match(/^\/card\/([^/]+)\/?$/);
     if (!match) return Response.redirect(new URL("/", url).href, 302);
 
@@ -90,5 +101,4 @@ export default {
         "x-robots-tag": "noindex",
       },
     });
-  },
-};
+}

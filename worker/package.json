@@ -1,4 +1,12 @@
 {
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "waitlist:schema": "wrangler d1 execute river-waitlist --remote --file=schema.sql",
+    "waitlist": "wrangler d1 execute river-waitlist --remote --command \"SELECT COUNT(*) AS signups, lang FROM waitlist GROUP BY lang\"",
+    "waitlist:csv": "node scripts/export-waitlist.mjs"
+  },
   "dependencies": {},
   "devDependencies": {
     "wrangler": "^4.110.0"

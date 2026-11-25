@@ -220,3 +220,28 @@ details p { padding: 0 0 26px; color: var(--muted); max-width: 640px; }
 /* Language switcher (footer) */
 .footer .lang { flex-basis: 100%; gap: 18px; padding-top: 18px; border-top: 1px solid var(--glass-line); }
 .footer .lang a[aria-current] { color: var(--text); }
+
+/* Android waitlist (closing section) */
+.android { width: min(520px, 100%); margin-top: 72px; padding-top: 48px; border-top: 1px solid var(--glass-line); scroll-margin-top: 96px; }
+.android h3 { font-size: 22px; letter-spacing: -0.015em; }
+.closing .android p { margin: 10px 0 0; font-size: 16px; }
+.waitlist { display: flex; gap: 10px; margin-top: 24px; }
+.waitlist input[type="email"] {
+  flex: 1; min-width: 0; height: 54px; padding: 0 22px;
+  border-radius: 999px; border: 1px solid var(--glass-line); background: var(--glass);
+  color: var(--text); font: inherit; font-size: 16px;
+}
+.waitlist input[type="email"]::placeholder { color: var(--faint); }
+.waitlist input[type="email"]:focus { outline: none; border-color: var(--accent-soft); }
+.waitlist .btn { border: 0; cursor: pointer; font-family: inherit; flex: none; }
+.waitlist .btn:disabled { opacity: .6; cursor: default; }
+.closing .android .waitlist-msg { color: var(--text); font-size: 16px; }
+.closing .android .waitlist-msg:empty { display: none; }
+.closing .android .waitlist-msg.is-error { color: #FF8A80; }
+.closing .android .waitlist-fine { margin-top: 14px; color: var(--faint); font-size: 14px; }
+.waitlist-fine a { text-decoration: underline; text-underline-offset: 2px; }
+.hp, .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 640px) {
+  .waitlist { flex-direction: column; }
+  .waitlist .btn { justify-content: center; }
+}
