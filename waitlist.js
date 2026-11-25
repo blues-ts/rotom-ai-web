@@ -1,5 +1,5 @@
 // Android waitlist.
-// 1. On Android, App Store buttons point to the waitlist form instead.
+// 1. On Android, App Store buttons are hidden or point to the waitlist form instead.
 // 2. The form posts to /api/waitlist (Cloudflare Worker, see worker/src/waitlist.js)
 //    and shows the result inline. Without JS the form still posts normally.
 (function () {
@@ -18,6 +18,10 @@
 
   ready(function () {
     if (/Android/i.test(navigator.userAgent)) {
+      // Header and hero already have an Android button next to the App Store one.
+      var iosOnly = document.querySelectorAll(".ios-only");
+      for (var k = 0; k < iosOnly.length; k++) iosOnly[k].remove();
+      // Any other App Store button points at the waitlist instead.
       var links = document.querySelectorAll('a[href*="apps.apple.com"]');
       for (var i = 0; i < links.length; i++) {
         var a = links[i];
