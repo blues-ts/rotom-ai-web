@@ -15,4 +15,4 @@ routes = [
 [[d1_databases]]
 binding = "DB"
 database_name = "river-waitlist"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "3ef79feb-32d1-4fb6-999f-4f62d8615f67"
