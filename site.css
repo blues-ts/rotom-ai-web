@@ -246,6 +246,8 @@ details p { padding: 0 0 26px; color: var(--muted); max-width: 640px; }
 .hp, .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (max-width: 640px) {
   .waitlist { flex-direction: column; }
+  /* flex: 1 in a column sets the height basis to 0 and collapses the field */
+  .waitlist input[type="email"] { flex: none; width: 100%; text-align: center; padding: 0 18px; }
   .waitlist .btn { justify-content: center; }
 }
 
