@@ -37,6 +37,7 @@
 
 ## Guides
 
+- [How to spot fake Pokémon cards](https://rivertcg.com/guides/how-to-spot-fake-pokemon-cards/): how to tell a fake Pokémon card from a real one: text and font, the back, size and feel, holo and texture, set symbol and number, the light test, and verifying graded slabs by cert number
 - [How much is my Pokémon card worth?](https://rivertcg.com/guides/how-to-check-pokemon-card-value/): how to identify the exact printing and variant, judge condition, and price a card from recent sold prices
 - [Pokémon card centering: how to check it before you grade](https://rivertcg.com/guides/pokemon-card-centering/): what 55/45 and 60/40 mean, how to measure centering, and the centering limits for PSA 10, CGC and BGS
 - [Is it worth grading your Pokémon card?](https://rivertcg.com/guides/is-it-worth-grading-pokemon-cards/): how to compare raw and graded prices, judge condition, and add up PSA and CGC grading costs
